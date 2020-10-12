@@ -1,4 +1,5 @@
 import React from 'react';
+import { FiArrowRight } from 'react-icons/fi';
 
 import './styles/global.css';
 import './styles/pages/landing.css';
@@ -24,7 +25,7 @@ const App: React.FC = () => {
         </div>
 
         <a href="#" className="enter-app">
-          {'>'}
+          <FiArrowRight size={26} color="rgba(0, 0, 0, 0.6)" />
         </a>
       </div>
     </div>
