@@ -7,6 +7,7 @@ export const Container = styled.div`
     color: #8fa7b2;
     display: block;
     margin-bottom: 8px;
+    font-size: 16px;
   }
 
   input {
@@ -20,5 +21,7 @@ export const Container = styled.div`
     color: #5c8599;
     border: 1px solid #a1e9c5;
     background-color: #f5f8fa;
+
+    font-size: 18px;
   }
 `;

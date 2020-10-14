@@ -4,7 +4,11 @@ import { LeafletMouseEvent } from 'leaflet';
 
 import Input from '../../components/Input';
 
+import logoImg from '../../assets/img/logo.svg'
+
 import { Container, Main, Sidebar, Form } from './style';
+import { Link } from 'react-router-dom';
+import { FiArrowLeft } from 'react-icons/fi';
 
 const CreateOrphanage: React.FC = () => {
   const [name, setName] = useState('');
@@ -24,7 +28,12 @@ const CreateOrphanage: React.FC = () => {
 
   return (
     <Container>
-      <Sidebar />
+      <Sidebar >
+        <img src={logoImg} alt="Logo Happy" />
+        <Link to="/maps">
+          <FiArrowLeft size={26} color="#fff" />
+        </Link>
+      </Sidebar>
       <Main>
         <Form>
           <fieldset>
