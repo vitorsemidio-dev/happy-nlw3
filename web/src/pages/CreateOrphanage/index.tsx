@@ -1,14 +1,15 @@
 import React, { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
+import { FiArrowLeft } from 'react-icons/fi';
 
 import Input from '../../components/Input';
+import Textarea from '../../components/Textarea';
 
 import logoImg from '../../assets/img/logo.svg'
 
-import { Container, Main, Sidebar, Form } from './style';
-import { Link } from 'react-router-dom';
-import { FiArrowLeft } from 'react-icons/fi';
+import { Container, Main, Sidebar, Form, Title } from './style';
 
 const CreateOrphanage: React.FC = () => {
   const [name, setName] = useState('');
@@ -35,6 +36,10 @@ const CreateOrphanage: React.FC = () => {
         </Link>
       </Sidebar>
       <Main>
+        <Title>
+          Adicione um Orfanato
+        </Title>
+
         <Form>
           <fieldset>
             <legend>Dados</legend>
@@ -57,9 +62,10 @@ const CreateOrphanage: React.FC = () => {
               }}
             />
 
-            <Input
+            <Textarea
               name="about"
               label="Sobre"
+              extraInfo="Máximo de 300 catacteres"
               value={about}
               onChange={(e) => {
                 setAbout(e.target.value);
@@ -82,7 +88,7 @@ const CreateOrphanage: React.FC = () => {
           <fieldset>
             <legend>Visitação</legend>
 
-            <Input
+            <Textarea
               name="instructions"
               label="Instruções"
               value={instructions}

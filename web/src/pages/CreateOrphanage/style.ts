@@ -96,3 +96,11 @@ export const Form = styled.form`
     }
   }
 `;
+
+export const Title = styled.h2`
+  color: #8fa7b2;
+  font-weight: normal;
+  font-size: 18px;
+  margin-bottom: 24px;
+  text-align: center;
+`;
