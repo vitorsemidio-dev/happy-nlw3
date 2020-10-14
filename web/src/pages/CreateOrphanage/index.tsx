@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { FormEvent, useCallback, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import { FiArrowLeft } from 'react-icons/fi';
@@ -7,11 +7,15 @@ import { FiArrowLeft } from 'react-icons/fi';
 import Input from '../../components/Input';
 import Textarea from '../../components/Textarea';
 
+import api from '../../services/api';
+
 import logoImg from '../../assets/img/logo.svg'
 
 import { Container, Main, Sidebar, Form, Title } from './style';
 
 const CreateOrphanage: React.FC = () => {
+  const history = useHistory();
+
   const [name, setName] = useState('');
   const [about, setAbout] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -20,12 +24,38 @@ const CreateOrphanage: React.FC = () => {
 
   const [instructions, setInstructions] = useState('');
   const [opening_hours, setOpeningHours] = useState('');
-  const [open_on_weekend, setOpenOnWeekend] = useState(false);
+  const [open_on_weekends, setOpenOnWeekend] = useState(false);
 
   const handleMapClick = useCallback((event: LeafletMouseEvent) => {
     const { lat, lng } = event.latlng;
     setSelectedPosition([lat, lng]);
   }, [setSelectedPosition]);
+
+  const handleCreateOrphanage = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+
+      api
+        .post('/orphanages', {
+          name,
+          latitude: selectedPosition[0],
+          longitude: selectedPosition[1],
+          about,
+          instructions,
+          opening_hours,
+          open_on_weekends,
+        })
+        .then(() => {
+          alert('Cadastro criado com sucesso!');
+
+          history.push('/');
+        })
+        .catch(() => {
+          alert('Erro no cadastro!');
+        });
+    },
+    [name, selectedPosition, whatsapp, about, instructions, opening_hours, open_on_weekends, history],
+  );
 
   return (
     <Container>
@@ -40,18 +70,18 @@ const CreateOrphanage: React.FC = () => {
           Adicione um Orfanato
         </Title>
 
-        <Form>
+        <Form onSubmit={(e) => handleCreateOrphanage(e)}>
           <fieldset>
             <legend>Dados</legend>
 
-            {/* <Map center={initialPosition} zoom={15} onClick={handleMapClick}>
+            <Map center={initialPosition} zoom={15} onClick={handleMapClick}>
               <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
 
               <Marker position={selectedPosition} />
-            </Map> */}
+            </Map>
 
             <Input
               name="name"
