@@ -1,74 +1,97 @@
-import React, { FormEvent, useCallback, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { Map, TileLayer, Marker } from 'react-leaflet';
-import { LeafletMouseEvent } from 'leaflet';
-import { FiArrowLeft } from 'react-icons/fi';
+import React, { FormEvent, useCallback, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { Map, TileLayer, Marker } from "react-leaflet";
+import { LeafletMouseEvent } from "leaflet";
+import { FiArrowLeft } from "react-icons/fi";
 
-import Input from '../../components/Input';
-import Textarea from '../../components/Textarea';
+import Input from "../../components/Input";
+import Textarea from "../../components/Textarea";
 
-import api from '../../services/api';
+import api from "../../services/api";
 
-import logoImg from '../../assets/img/logo.svg'
+import logoImg from "../../assets/img/logo.svg";
 
-import { Container, Main, Sidebar, Form, Title } from './style';
+import { Container, Main, Sidebar, Form, Title } from "./style";
 
 const CreateOrphanage: React.FC = () => {
   const history = useHistory();
 
-  const [name, setName] = useState('');
-  const [about, setAbout] = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
-  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
-  const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
+  const [name, setName] = useState("");
+  const [about, setAbout] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([
+    0,
+    0,
+  ]);
+  const [initialPosition, setInitialPosition] = useState<[number, number]>([
+    0,
+    0,
+  ]);
+  const [selectedImages, setSelectedImages] = useState<File[]>();
 
-  const [instructions, setInstructions] = useState('');
-  const [opening_hours, setOpeningHours] = useState('');
+  const [instructions, setInstructions] = useState("");
+  const [opening_hours, setOpeningHours] = useState("");
   const [open_on_weekends, setOpenOnWeekend] = useState(false);
 
-  const handleMapClick = useCallback((event: LeafletMouseEvent) => {
-    const { lat, lng } = event.latlng;
-    setSelectedPosition([lat, lng]);
-  }, [setSelectedPosition]);
+  const handleMapClick = useCallback(
+    (event: LeafletMouseEvent) => {
+      const { lat, lng } = event.latlng;
+      setSelectedPosition([lat, lng]);
+    },
+    [setSelectedPosition]
+  );
 
   const handleCreateOrphanage = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
 
-      api
-        .post('/orphanages', {
-          name,
-          latitude: selectedPosition[0],
-          longitude: selectedPosition[1],
-          about,
-          instructions,
-          opening_hours,
-          open_on_weekends,
-        })
-        .then(() => {
-          alert('Cadastro criado com sucesso!');
+      const data = new FormData();
 
-          history.push('/');
+      data.append("name", name);
+      data.append("latitude", String(selectedPosition[0]));
+      data.append("longitude", String(selectedPosition[1]));
+      data.append("about", about);
+      data.append("instructions", instructions);
+      data.append("opening_hours", opening_hours);
+      data.append("open_on_weekends", String(open_on_weekends));
+
+      if (selectedImages) {
+        selectedImages.forEach((image) => data.append("images", image));
+      }
+
+      api
+        .post("/orphanages", data)
+        .then(() => {
+          alert("Cadastro criado com sucesso!");
+
+          history.push("/");
         })
         .catch(() => {
-          alert('Erro no cadastro!');
+          alert("Erro no cadastro!");
         });
     },
-    [name, selectedPosition, whatsapp, about, instructions, opening_hours, open_on_weekends, history],
+    [
+      name,
+      selectedPosition,
+      whatsapp,
+      about,
+      instructions,
+      opening_hours,
+      open_on_weekends,
+      history,
+    ]
   );
 
   return (
     <Container>
-      <Sidebar >
+      <Sidebar>
         <img src={logoImg} alt="Logo Happy" />
         <Link to="/maps">
           <FiArrowLeft size={26} color="#fff" />
         </Link>
       </Sidebar>
       <Main>
-        <Title>
-          Adicione um Orfanato
-        </Title>
+        <Title>Adicione um Orfanato</Title>
 
         <Form onSubmit={(e) => handleCreateOrphanage(e)}>
           <fieldset>
@@ -112,7 +135,6 @@ const CreateOrphanage: React.FC = () => {
             />
 
             {/* TODO: Fotos */}
-
           </fieldset>
 
           <fieldset>
@@ -137,16 +159,13 @@ const CreateOrphanage: React.FC = () => {
             />
 
             {/* TODO: Atende Fim de Semana */}
-
           </fieldset>
 
-          <button>
-            Confirmar
-          </button>
+          <button>Confirmar</button>
         </Form>
       </Main>
     </Container>
-  )
-}
+  );
+};
 
 export default CreateOrphanage;
