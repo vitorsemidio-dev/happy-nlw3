@@ -10,8 +10,6 @@ import Sidebar from "../../components/Sidebar";
 import api from "../../services/api";
 import mapMarkerImg from "../../assets/img/map-marker.svg";
 
-import "./orphanage.css";
-
 import {
   ContainerOrphanage,
   OrphanageDetails,
