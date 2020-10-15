@@ -79,7 +79,7 @@ const OrphanagesMap: React.FC = () => {
         <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       </Map>
 
-      <LinkCreateOrphanage to="/create-orphanagef">
+      <LinkCreateOrphanage to="/create-orphanage">
         <FiPlus size={32} color="#fff" />
       </LinkCreateOrphanage>
     </OrphanagesMapContainer>

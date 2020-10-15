@@ -42,7 +42,7 @@ interface OrphanageParams {
   id: string;
 }
 
-export default function Orphanage() {
+const Orphanage: React.FC = () => {
   const params = useParams<OrphanageParams>();
   const [orphanage, setOrphanage] = useState<Orphanage>();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -150,4 +150,6 @@ export default function Orphanage() {
       </main>
     </ContainerOrphanage>
   );
-}
+};
+
+export default Orphanage;
