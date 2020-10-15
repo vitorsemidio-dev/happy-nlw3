@@ -12,6 +12,12 @@ import mapMarkerImg from "../../assets/img/map-marker.svg";
 
 import "./orphanage.css";
 
+import {
+  ContainerOrphanage,
+  OrphanageDetails,
+  OrphanageDetailsContent,
+} from "./styles";
+
 const happyMapIcon = Leaflet.icon({
   iconUrl: mapMarkerImg,
   iconSize: [58, 68],
@@ -54,11 +60,11 @@ export default function Orphanage() {
     return <p>Carregando...</p>;
   }
   return (
-    <div id="page-orphanage">
+    <ContainerOrphanage id="page-orphanage">
       <Sidebar />
 
       <main>
-        <div className="orphanage-details">
+        <OrphanageDetails>
           <img
             src={orphanage.images[activeImageIndex].url}
             alt="Lar das meninas"
@@ -77,7 +83,7 @@ export default function Orphanage() {
             ))}
           </div>
 
-          <div className="orphanage-details-content">
+          <OrphanageDetailsContent>
             <h1> {orphanage.name} </h1>
             <p>{orphanage.about}</p>
 
@@ -141,9 +147,9 @@ export default function Orphanage() {
               <FaWhatsapp size={20} color="#FFF" />
               Entrar em contato
             </button>
-          </div>
-        </div>
+          </OrphanageDetailsContent>
+        </OrphanageDetails>
       </main>
-    </div>
+    </ContainerOrphanage>
   );
 }
