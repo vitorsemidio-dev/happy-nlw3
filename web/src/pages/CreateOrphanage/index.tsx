@@ -1,20 +1,29 @@
 import React, { FormEvent, useCallback, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Map, TileLayer, Marker } from "react-leaflet";
-import { LeafletMouseEvent } from "leaflet";
-import { FiArrowLeft } from "react-icons/fi";
+import Leaflet, { LeafletMouseEvent } from "leaflet";
+import { FiArrowLeft, FiPlus } from "react-icons/fi";
 
 import Input from "../../components/Input";
 import Textarea from "../../components/Textarea";
 
 import api from "../../services/api";
 
-import logoImg from "../../assets/img/logo.svg";
+import mapMarkerImg from "../../assets/img/logo.svg";
 
-import { Container, Main, Sidebar, Form, Title } from "./style";
+import { Container, Main, Sidebar, Form, Title, ContainerImage } from "./style";
+
+const happyMapIcon = Leaflet.icon({
+  iconUrl: mapMarkerImg,
+
+  iconSize: [58, 68],
+  iconAnchor: [29, 68],
+  popupAnchor: [0, -60],
+});
 
 const CreateOrphanage: React.FC = () => {
   const history = useHistory();
+  const { goBack } = useHistory();
 
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
@@ -85,7 +94,7 @@ const CreateOrphanage: React.FC = () => {
   return (
     <Container>
       <Sidebar>
-        <img src={logoImg} alt="Logo Happy" />
+        <img src={mapMarkerImg} alt="Logo Happy" />
         <Link to="/maps">
           <FiArrowLeft size={26} color="#fff" />
         </Link>
@@ -103,7 +112,12 @@ const CreateOrphanage: React.FC = () => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
 
-              <Marker position={selectedPosition} />
+              {/* <Marker position={selectedPosition} /> */}
+              <Marker
+                interactive={false}
+                icon={happyMapIcon}
+                position={[-27.2092052, -49.6401092]}
+              />
             </Map>
 
             <Input
@@ -135,6 +149,16 @@ const CreateOrphanage: React.FC = () => {
             />
 
             {/* TODO: Fotos */}
+
+            <ContainerImage className="input-block">
+              <label htmlFor="images">Fotos</label>
+
+              <div className="uploaded-image"></div>
+
+              <button className="new-image">
+                <FiPlus size={24} color="#15b6d6" />
+              </button>
+            </ContainerImage>
           </fieldset>
 
           <fieldset>

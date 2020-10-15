@@ -104,3 +104,5 @@ export const Title = styled.h2`
   margin-bottom: 24px;
   text-align: center;
 `;
+
+export const ContainerImage = styled.div``;
