@@ -12,9 +12,7 @@ import api from "../../services/api";
 
 import mapMarkerImg from "../../assets/img/map-marker.svg";
 
-import { Container } from "./styles";
-
-import "./create-orphanage.css";
+import { Container, Form } from "./styles";
 
 const happyMapIcon = Leaflet.icon({
   iconUrl: mapMarkerImg,
@@ -99,11 +97,11 @@ const CreateOrphanage: React.FC = () => {
   );
 
   return (
-    <div id="page-create-orphanage">
+    <Container id="page-create-orphanage">
       <Sidebar />
 
       <main>
-        <form onSubmit={handleSubmit} className="create-orphanage-form">
+        <Form onSubmit={handleSubmit} className="create-orphanage-form">
           <fieldset>
             <legend>Dados</legend>
 
@@ -208,9 +206,9 @@ const CreateOrphanage: React.FC = () => {
           <button className="confirm-button" type="submit">
             Confirmar
           </button>
-        </form>
+        </Form>
       </main>
-    </div>
+    </Container>
   );
 };
 
