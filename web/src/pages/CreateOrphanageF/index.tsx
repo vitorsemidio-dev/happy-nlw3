@@ -2,8 +2,13 @@ import React, { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import Leaflet, { LeafletMouseEvent } from "leaflet";
 import { FiPlus } from "react-icons/fi";
+import { useHistory } from "react-router-dom";
 
+import Textarea from "../../components/Textarea";
+import Input from "../../components/Input";
 import Sidebar from "../../components/Sidebar";
+
+import api from "../../services/api";
 
 import mapMarkerImg from "../../assets/img/map-marker.svg";
 
@@ -19,10 +24,17 @@ const happyMapIcon = Leaflet.icon({
 });
 
 const CreateOrphanage: React.FC = () => {
+  const history = useHistory();
+
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
   const [open_on_weekends, setOpenOnWeekend] = useState(false);
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [name, setName] = useState("");
+  const [about, setAbout] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [instructions, setInstructions] = useState("");
+  const [opening_hours, setOpeningHours] = useState("");
 
   const handleMapClick = useCallback((event: LeafletMouseEvent) => {
     const { lat, lng } = event.latlng;
@@ -33,22 +45,43 @@ const CreateOrphanage: React.FC = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    (event: FormEvent) => {
+    async (event: FormEvent) => {
       event.preventDefault();
+
       const { latitude, longitude } = position;
-      const data = {
-        latitude,
-        longitude,
-        open_on_weekends,
-      };
+      const data = new FormData();
+
+      data.append("name", name);
+      data.append("latitude", String(latitude));
+      data.append("longitude", String(longitude));
+      data.append("about", about);
+      data.append("instructions", instructions);
+      data.append("opening_hours", opening_hours);
+      data.append("open_on_weekends", String(open_on_weekends));
+
+      if (images) {
+        images.forEach((image) => data.append("images", image));
+      }
+
+      await api.post("/orphanages", data);
+
+      alert("Cadastro realizado com sucesso");
+
+      history.push("/maps");
     },
-    [position, open_on_weekends]
+    [
+      position,
+      open_on_weekends,
+      name,
+      about,
+      instructions,
+      open_on_weekends,
+      opening_hours,
+    ]
   );
 
   const handleSelectImages = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      // eve
-      console.log(event.target.files);
       if (!event.target.files) {
         return;
       }
@@ -75,7 +108,7 @@ const CreateOrphanage: React.FC = () => {
             <legend>Dados</legend>
 
             <Map
-              center={[-27.2092052, -49.6401092]}
+              center={[-22.932017, -43.2086569]}
               style={{ width: "100%", height: 280 }}
               zoom={15}
               onclick={handleMapClick}
@@ -90,17 +123,24 @@ const CreateOrphanage: React.FC = () => {
               )}
             </Map>
 
-            <div className="input-block">
-              <label htmlFor="name">Nome</label>
-              <input id="name" />
-            </div>
+            <Input
+              name="name"
+              label="Nome"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
 
-            <div className="input-block">
-              <label htmlFor="about">
-                Sobre <span>Máximo de 300 caracteres</span>
-              </label>
-              <textarea id="name" maxLength={300} />
-            </div>
+            <Textarea
+              name="about"
+              label="Sobre"
+              extraInfo="Máximo de 300 catacteres"
+              value={about}
+              onChange={(e) => {
+                setAbout(e.target.value);
+              }}
+            />
 
             <div className="input-block">
               <label htmlFor="images">Fotos</label>
@@ -125,15 +165,23 @@ const CreateOrphanage: React.FC = () => {
           <fieldset>
             <legend>Visitação</legend>
 
-            <div className="input-block">
-              <label htmlFor="instructions">Instruções</label>
-              <textarea id="instructions" />
-            </div>
+            <Textarea
+              name="instructions"
+              label="Instruções"
+              value={instructions}
+              onChange={(e) => {
+                setInstructions(e.target.value);
+              }}
+            />
 
-            <div className="input-block">
-              <label htmlFor="opening_hours">Nome</label>
-              <input id="opening_hours" />
-            </div>
+            <Input
+              name="opening_hours"
+              label="Horário das visitas"
+              value={opening_hours}
+              onChange={(e) => {
+                setOpeningHours(e.target.value);
+              }}
+            />
 
             <div className="input-block">
               <label htmlFor="open_on_weekends">Atende fim de semana</label>
