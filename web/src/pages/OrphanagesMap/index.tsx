@@ -50,7 +50,7 @@ const OrphanagesMap: React.FC = () => {
         <Marker position={[-22.932017, -43.2086569]} icon={mapIcon}>
           <PopupOrphanage closeButton={false} minWidth={240} maxWidth={240}>
             Lar das meninas
-            <Link to="">
+            <Link to="/orphanages/1">
               <FiArrowRight color="#fff" size={20} />
             </Link>
           </PopupOrphanage>
@@ -58,7 +58,7 @@ const OrphanagesMap: React.FC = () => {
         <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       </Map>
 
-      <LinkCreateOrphanage to="/create-orphanage">
+      <LinkCreateOrphanage to="/create-orphanagef">
         <FiPlus size={32} color="#fff" />
       </LinkCreateOrphanage>
     </OrphanagesMapContainer>
