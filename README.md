@@ -118,6 +118,10 @@ $ yarn start
 
 ### 📱 Rodando a aplicação mobile (App)
 
+```
+adb reverse tcp:3333 tcp:3333
+```
+
 ```bash
 
 # Clone este repositório

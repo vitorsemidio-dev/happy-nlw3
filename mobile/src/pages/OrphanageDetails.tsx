@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Image,
   View,
@@ -8,9 +8,10 @@ import {
   Text,
   StyleSheet,
   Dimensions,
+  Linking,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { Feather, FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
 import { useRoute } from '@react-navigation/native';
 
@@ -41,6 +42,12 @@ export default function OrphanageDetails() {
   const [orphanage, setOrphanage] = useState<Orphanage>();
 
   const params = route.params as OrphanageDetailsRouteParams;
+
+  const handleOpenGoogleMapsRoutes = useCallback(() => {
+    Linking.openURL(
+      `https://www.google.com/maps/dir/?api=1&destination=${orphanage?.latitude},${orphanage?.longitude}`,
+    );
+  }, [orphanage?.latitude, orphanage?.longitude]);
 
   useEffect(() => {
     api.get<Orphanage>(`orphanages/${params.id}`).then((response) => {
@@ -92,15 +99,17 @@ export default function OrphanageDetails() {
             <Marker
               icon={mapMarkerImg}
               coordinate={{
-                latitude: -27.2092052,
-                longitude: -49.6401092,
+                latitude: orphanage.latitude,
+                longitude: orphanage.longitude,
               }}
             />
           </MapView>
 
-          <View style={styles.routesContainer}>
+          <RectButton
+            onPress={handleOpenGoogleMapsRoutes}
+            style={styles.routesContainer}>
             <Text style={styles.routesText}>Ver rotas no Google Maps</Text>
-          </View>
+          </RectButton>
         </View>
 
         <View style={styles.separator} />
