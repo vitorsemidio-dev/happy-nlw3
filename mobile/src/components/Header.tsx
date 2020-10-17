@@ -1,16 +1,36 @@
 /** @format */
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { BorderlessButton } from 'react-native-gesture-handler';
+import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 interface Headerprops {
   title: string;
+  showCancel?: boolean;
 }
 
-const Header: React.FC<Headerprops> = ({ title }) => {
+const Header: React.FC<Headerprops> = ({ title, showCancel = true }) => {
+  const navigation = useNavigation();
+
+  const handleGoBackToAppHomepage = useCallback(() => {
+    navigation.navigate('OrphanagesMap');
+  }, []);
+
   return (
     <View style={styles.contianer}>
+      <BorderlessButton onPress={navigation.goBack}>
+        <Feather name='arrow-left' size={24} color='#15b6d6' />
+      </BorderlessButton>
       <Text style={styles.title}>{title}</Text>
+      {showCancel ? (
+        <BorderlessButton onPress={handleGoBackToAppHomepage}>
+          <Feather name='x' size={24} color='#ff669d' />
+        </BorderlessButton>
+      ) : (
+        <View />
+      )}
     </View>
   );
 };
