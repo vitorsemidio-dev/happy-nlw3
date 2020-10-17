@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
@@ -29,13 +29,15 @@ export default function OrphanagesMap() {
     });
   }, []);
 
-  const handleNavigateToOrphanageDetails = useCallback(() => {
-    navigation.navigate('OrphanageDetails');
+  const handleNavigateToOrphanageDetails = useCallback((id: number) => {
+    navigation.navigate('OrphanageDetails', { id });
   }, []);
 
   const handleNavigateToCreateOrphanage = useCallback(() => {
     navigation.navigate('SelectMapPosition');
   }, []);
+
+  const orphanagesFound = useMemo(() => orphanages.length, [orphanages.length]);
 
   return (
     <View style={styles.container}>
@@ -61,7 +63,9 @@ export default function OrphanagesMap() {
                 latitude: orphanage.latitude,
                 longitude: orphanage.longitude,
               }}>
-              <Callout tooltip onPress={handleNavigateToOrphanageDetails}>
+              <Callout
+                tooltip
+                onPress={() => handleNavigateToOrphanageDetails(orphanage.id)}>
                 <View style={styles.calloutContainer}>
                   <Text style={styles.calloutText}>{orphanage.name}</Text>
                 </View>
@@ -72,7 +76,9 @@ export default function OrphanagesMap() {
       </MapView>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>2 orfanatos encontrados</Text>
+        <Text style={styles.footerText}>
+          {orphanagesFound} orfanatos encontrados
+        </Text>
 
         <RectButton
           style={styles.createOrphanageButton}
