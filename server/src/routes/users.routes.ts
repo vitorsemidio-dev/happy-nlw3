@@ -35,9 +35,6 @@ usersRoutes.put('/:id', celebrate({
   [Segments.BODY]: {
     name: Joi.string(),
     email: Joi.string().email(),
-    // oldPassword: Joi.string(),
-    // newPassword: Joi.string(),
-    // newPasswordConfirmation: Joi.string().valid(Joi.ref('newPassword')),
   }
 }), usersController.update);
 

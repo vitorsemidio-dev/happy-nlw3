@@ -2,8 +2,10 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 
 import User from '../models/User';
+
 import CreateUserService from '../services/CreateUserService';
 import UpdateUserService from '../services/UpdateUserService';
+
 import userView from '../views/users_view';
 
 class UsersController {
@@ -55,15 +57,12 @@ class UsersController {
       passwordConfirmation,
     });
 
-    return response.json(user);
+    return response.json(userView.render(user));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const usersRepository = getRepository(User);
     const { id } = request.params;
-    const { name, email, oldPassword,
-      newPassword,
-      newPasswordConfirmation } = request.body;
+    const { name, email } = request.body;
 
     const updateUser = new UpdateUserService();
 
@@ -71,12 +70,9 @@ class UsersController {
       id: Number(id),
       name,
       email,
-      oldPassword,
-      newPassword,
-      newPasswordConfirmation,
     });
 
-    return response.json(user);
+    return response.json(userView.render(user));
   }
 }
 
