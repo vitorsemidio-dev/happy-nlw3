@@ -29,11 +29,15 @@ usersRoutes.delete('/:id', celebrate({
 }), usersController.delete);
 
 usersRoutes.put('/:id', celebrate({
+  [Segments.PARAMS]: {
+    id: Joi.number().required(),
+  },
   [Segments.BODY]: {
     name: Joi.string(),
     email: Joi.string().email(),
-    password: Joi.string(),
-    passwordConfirmation: Joi.string().valid(Joi.ref('password')),
+    // oldPassword: Joi.string(),
+    // newPassword: Joi.string(),
+    // newPasswordConfirmation: Joi.string().valid(Joi.ref('newPassword')),
   }
 }), usersController.update);
 

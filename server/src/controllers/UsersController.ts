@@ -3,6 +3,8 @@ import { getRepository } from 'typeorm';
 
 import User from '../models/User';
 import CreateUserService from '../services/CreateUserService';
+import UpdateUserService from '../services/UpdateUserService';
+import userView from '../views/users_view';
 
 class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -10,33 +12,33 @@ class UsersController {
 
     const users = await usersRepository.find();
 
-    return response.json(users);
+    return response.json(userView.renderMany(users));
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const usersRepository = getRepository(User);
 
-    const checkUserExists = await usersRepository.findOne(id);
+    const user = await usersRepository.findOne(id);
 
-    if (!checkUserExists) {
+    if (!user) {
       return response.status(404).json({ err: 'User not found' });
     }
 
-    return response.json(checkUserExists);
+    return response.json(userView.render(user));
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const usersRepository = getRepository(User);
 
-    const checkUserExist = await usersRepository.findOne(id);
+    const user = await usersRepository.findOne(id);
 
-    if (!checkUserExist) {
+    if (!user) {
       return response.status(404).json({ err: 'User not found' });
     }
 
-    await usersRepository.delete(checkUserExist.id);
+    await usersRepository.delete(user.id);
 
     return response.status(204).send();
   }
@@ -59,24 +61,22 @@ class UsersController {
   public async update(request: Request, response: Response): Promise<Response> {
     const usersRepository = getRepository(User);
     const { id } = request.params;
-    const { name, email, password, passwordConfirmation } = request.body;
+    const { name, email, oldPassword,
+      newPassword,
+      newPasswordConfirmation } = request.body;
 
-    const checkUser = await usersRepository.findOne(id);
+    const updateUser = new UpdateUserService();
 
-    if (!checkUser) {
-      return response.status(404).json({ err: 'User not found' });
-    }
+    const user = await updateUser.execute({
+      id: Number(id),
+      name,
+      email,
+      oldPassword,
+      newPassword,
+      newPasswordConfirmation,
+    });
 
-    const userUpdated = {
-      id: checkUser.id,
-      name: name || checkUser.name,
-      email: email || checkUser.email,
-      password: password || checkUser.password,
-    }
-
-    await usersRepository.save(userUpdated);
-
-    return response.json(userUpdated);
+    return response.json(user);
   }
 }
 

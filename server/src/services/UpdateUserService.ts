@@ -24,7 +24,6 @@ export default class UpdateUserService {
 
     user.name = name || user.name;
 
-
     if (email) {
       const checkEmailIsUsed = await usersRepository.findOne({
         where: { email },
