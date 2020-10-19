@@ -1,3 +1,41 @@
-export default class CreateUserService {
+import { getRepository } from 'typeorm';
+import { hash } from 'bcryptjs';
 
+import User from '../models/User';
+
+interface IRequest {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+}
+
+export default class CreateUserService {
+  public async execute({ name, email, password, passwordConfirmation }: IRequest): Promise<User> {
+    const usersRepository = getRepository(User);
+
+    if (password !== passwordConfirmation) {
+      throw new Error('Password does not match');
+    }
+
+    const checkEmailIsUsed = await usersRepository.findOne({
+      where: { email },
+    });
+
+    if (checkEmailIsUsed) {
+      throw new Error('Email is already used');
+    }
+
+    const passwordHashed = await hash(password, 8);
+
+    const user = usersRepository.create({
+      name,
+      email,
+      password: passwordHashed,
+    });
+
+    await usersRepository.save(user);
+
+    return user;
+  }
 }

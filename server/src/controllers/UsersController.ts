@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 
-import User from '../models/User'
+import User from '../models/User';
+import CreateUserService from '../services/CreateUserService';
 
 class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -16,7 +17,7 @@ class UsersController {
     const { id } = request.params;
     const usersRepository = getRepository(User);
 
-    const checkUserExists = usersRepository.findOne(id);
+    const checkUserExists = await usersRepository.findOne(id);
 
     if (!checkUserExists) {
       return response.status(404).json({ err: 'User not found' });
@@ -42,15 +43,15 @@ class UsersController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { name, email, password, passwordConfirmation } = request.body;
-    const usersRepository = getRepository(User);
 
-    const user = usersRepository.create({
+    const createUser = new CreateUserService();
+
+    const user = await createUser.execute({
       name,
       email,
       password,
-    })
-
-    await usersRepository.save(user);
+      passwordConfirmation,
+    });
 
     return response.json(user);
   }
