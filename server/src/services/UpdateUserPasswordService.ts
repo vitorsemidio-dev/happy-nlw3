@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm';
 import { hash, compare } from 'bcryptjs';
 
+import AppError from '../errors/AppError';
 import User from '../models/User';
 
 interface Request {
@@ -17,21 +18,21 @@ export default class UpdateUserPasswordService {
     const user = await usersRepository.findOne(userId);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new AppError('User not found', 404);
     }
 
     if (!oldPassword) {
-      throw new Error('You must provide the old password');
+      throw new AppError('You must provide the old password');
     }
 
     const checkOldPassword = await compare(oldPassword, user.password);
 
     if (!checkOldPassword) {
-      throw new Error('Invalid password');
+      throw new AppError('Invalid password');
     }
 
     if (newPassword !== newPasswordConfirmation) {
-      throw new Error('New password and password conformation does not match');
+      throw new AppError('New password and password conformation does not match');
     }
 
     const passwordHash = await hash(newPassword, 8);

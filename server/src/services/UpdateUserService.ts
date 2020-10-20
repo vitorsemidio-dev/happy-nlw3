@@ -1,5 +1,6 @@
 import { getRepository } from 'typeorm';
 
+import AppError from '../errors/AppError';
 import User from '../models/User';
 
 interface IRequest {
@@ -15,7 +16,7 @@ export default class UpdateUserService {
     const user = await usersRepository.findOne(id);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new AppError('User not found', 404);
     }
 
     user.name = name || user.name;
@@ -26,7 +27,7 @@ export default class UpdateUserService {
       });
 
       if (checkEmailIsUsed && checkEmailIsUsed.id !== user.id) {
-        throw new Error('Email is already used');
+        throw new AppError('Email is already used', 409);
       }
 
       user.email = email;

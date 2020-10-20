@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
+import AppError from '../errors/AppError';
 import User from '../models/User';
 
 interface IRequest {
@@ -15,7 +16,7 @@ export default class CreateUserService {
     const usersRepository = getRepository(User);
 
     if (password !== passwordConfirmation) {
-      throw new Error('Password does not match');
+      throw new AppError('Password does not match');
     }
 
     const checkEmailIsUsed = await usersRepository.findOne({
@@ -23,7 +24,7 @@ export default class CreateUserService {
     });
 
     if (checkEmailIsUsed) {
-      throw new Error('Email is already used');
+      throw new AppError('Email is already used', 409);
     }
 
     const passwordHashed = await hash(password, 8);
