@@ -1,5 +1,6 @@
 import { getRepository } from 'typeorm'
-import { compare } from 'bcryptjs'
+import { compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 
 import AppError from '../errors/AppError';
 import User from '../models/User';
@@ -11,7 +12,8 @@ interface IRequest {
 }
 
 interface IResponse {
-  user: User,
+  token: string;
+  user: User;
 }
 
 class AuthenticateUserService {
@@ -28,11 +30,17 @@ class AuthenticateUserService {
 
     const checkPassword = await compare(password, user.password);
 
-    if(!checkPassword) {
+    if (!checkPassword) {
       throw new AppError('Incorrect email/password combination')
     }
 
+    const token = sign({}, 'secret', {
+      subject: String(user.id),
+      expiresIn: '1d'
+    });
+
     return {
+      token,
       user,
     }
   }
