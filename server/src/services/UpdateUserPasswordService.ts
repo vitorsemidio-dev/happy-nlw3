@@ -4,7 +4,7 @@ import { hash, compare } from 'bcryptjs';
 import AppError from '../errors/AppError';
 import User from '../models/User';
 
-interface Request {
+interface IRequest {
   userId: number;
   oldPassword: string;
   newPassword: string;
@@ -12,7 +12,7 @@ interface Request {
 }
 
 export default class UpdateUserPasswordService {
-  public async execute({ userId, oldPassword, newPassword, newPasswordConfirmation }: Request): Promise<void> {
+  public async execute({ userId, oldPassword, newPassword, newPasswordConfirmation }: IRequest): Promise<void> {
     const usersRepository = getRepository(User);
 
     const user = await usersRepository.findOne(userId);
