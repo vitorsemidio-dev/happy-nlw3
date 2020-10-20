@@ -19,6 +19,7 @@
 
 <p>
     👉<a href="#-sobre-o-projeto" style="text-decoration: none; "> Sobre</a> <br/>
+    👉<a href="#-desafios" style="text-decoration: none; "> Desafios</a> <br/>
     👉<a href="#-funcionalidades" style="text-decoration: none; "> Funcionalidades</a> <br/>
     👉<a href="#-layout" style="text-decoration: none"> Layout</a> <br/>
     👉<a href="#-como-executar-o-projeto" style="text-decoration: none"> Como executar</a> <br/>
@@ -31,6 +32,23 @@
 Happy - é uma plataforma online para encontrar e facilitar visitas em orfanatos.
 
 Projeto desenvolvido durante a **3º edição da NLW - Next Level Week** oferecida pela [Rocketseat](https://blog.rocketseat.com.br).
+
+<a name="-desafios"></a>
+
+## 😎 Desafios
+
+Link [Notion Desafios](https://www.notion.so/Vers-o-2-0-do-Happy-c754db7a4d41469e8c2d00fcf75392c4)
+
+- [ ] Layout da aplicação
+- [ ] Acesso restrito
+- [ ] Recuperação de senhas
+- [ ] Cadastro de orfanatos
+- [ ] Splash Screen no react Native com Expo
+- [ ] Onboarding no usuário
+- [ ] Localização real do usuário
+- [ ] Cadastro em múltiplas etapas
+- [ ] Logout da aplicação
+- [ ] Deploy da aplicação
 
 ---
 
