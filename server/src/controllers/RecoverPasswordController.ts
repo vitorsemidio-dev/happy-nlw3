@@ -17,13 +17,14 @@ class RecoverPasswordController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { email, token } = request.body;
+    const { email, token, password } = request.body;
 
     const resetPassword = new ResetPasswordService();
 
     await resetPassword.execute({
       email,
       token,
+      password: String(password),
     });
 
     return response.send();

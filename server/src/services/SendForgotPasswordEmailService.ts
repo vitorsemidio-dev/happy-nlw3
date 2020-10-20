@@ -1,5 +1,6 @@
 import { getRepository } from 'typeorm';
 
+import AppError from '../errors/AppError';
 import User from '../models/User';
 
 interface IRequest {
@@ -13,6 +14,12 @@ class SendForgotPasswordEmailService {
       const user = await usersRepository.findOne({
         where: { email },
       });
+
+      if (!user) {
+        throw new AppError('User not found', 404);
+      }
+
+      // send email
     }
 }
 

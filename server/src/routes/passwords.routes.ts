@@ -6,9 +6,11 @@ import recoverPasswordController from '../controllers/RecoverPasswordController'
 
 const passwordsRoutes = Router();
 
+
+passwordsRoutes.put('/reset', recoverPasswordController.update);
+passwordsRoutes.post('/forgot', recoverPasswordController.create);
+
 passwordsRoutes.put('/:userId', passwordController.update);
 
-passwordsRoutes.post('/reset', recoverPasswordController.update);
-passwordsRoutes.post('/forgot', recoverPasswordController.create);
 
 export default passwordsRoutes;
