@@ -24,6 +24,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     const token = localStorage.getItem("@Happy:token");
     const user = localStorage.getItem("@Happy:user");
     if (token && user) {
+      api.defaults.headers.authorization = `Bearer ${token}`;
       return { token, user: JSON.parse(user) };
     }
     return {} as AuthState;
@@ -42,7 +43,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         localStorage.setItem("@Happy:token", token);
         localStorage.setItem("@Happy:user", JSON.stringify(user));
 
-        console.log(response.data);
+        api.defaults.headers.authorization = `Bearer ${token}`;
 
         setData({ token, user });
       } catch (err) {
