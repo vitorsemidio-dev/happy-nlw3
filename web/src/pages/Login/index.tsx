@@ -1,7 +1,8 @@
-import React, { FormEvent, useCallback, useState } from "react";
+import React, { FormEvent, useCallback, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import Input from "../../components/Input";
+import { AuthContext } from "../../hooks/auth";
 
 import api from "../../services/api";
 
@@ -21,6 +22,7 @@ interface ISessionResponse {
 
 const Login: React.FC = () => {
   const history = useHistory();
+  const { signIn } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,21 +31,22 @@ const Login: React.FC = () => {
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
+      signIn({ email, password });
 
-      try {
-        const { data } = await api.post<ISessionResponse>("/sessions", {
-          email,
-          password,
-        });
+      // try {
+      //   const { data } = await api.post<ISessionResponse>("/sessions", {
+      //     email,
+      //     password,
+      //   });
 
-        localStorage.setItem("@Happy:token", data.token);
-        history.push("/");
-      } catch (err) {
-        console.log("fail");
-        console.log(err);
-      }
+      //   localStorage.setItem("@Happy:token", data.token);
+      //   history.push("/");
+      // } catch (err) {
+      //   console.log("fail");
+      //   console.log(err);
+      // }
     },
-    [email, history, password]
+    [email, password, signIn]
   );
 
   return (
