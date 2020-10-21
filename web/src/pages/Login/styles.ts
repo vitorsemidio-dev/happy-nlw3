@@ -1,36 +1,5 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  min-width: 100vw;
-  min-height: 100vh;
-
-  display: flex;
-  background: linear-gradient(329.54deg, #29b6d1 0%, #00c7c7 100%);
-`;
-
-export const HappyContainer = styled.div`
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  > img {
-    margin-bottom: 100px;
-  }
-
-  .location {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    font-size: 34px;
-
-    strong {
-      font-weight: 800;
-    }
-  }
-`;
-
 export const FormContainer = styled.div`
   position: relative;
 
@@ -45,6 +14,8 @@ export const FormContainer = styled.div`
 `;
 
 export const Form = styled.form`
+  width: 100%;
+
   fieldset {
     border: 0;
 
@@ -94,5 +65,31 @@ export const FooterForm = styled.footer`
   a {
     text-align: center;
     text-decoration: none;
+  }
+`;
+
+export const ButtonBack = styled.button`
+  position: absolute;
+  top: 32px;
+  right: 32px;
+
+  width: 48px;
+  height: 48px;
+
+  border: 0;
+
+  background: #ebf2f5;
+  border-radius: 16px;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background: #d8e1e5;
   }
 `;

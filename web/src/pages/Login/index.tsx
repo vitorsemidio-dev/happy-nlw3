@@ -1,18 +1,13 @@
 import React, { FormEvent, useCallback, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { FiArrowLeft } from "react-icons/fi";
 
 import Input from "../../components/Input";
+import HappyContainer from "../../components/HappyContainer";
+
 import { useAuth } from "../../hooks/auth";
 
-import logotipo from "../../assets/img/logotipo.svg";
-
-import {
-  Container,
-  HappyContainer,
-  FormContainer,
-  Form,
-  FooterForm,
-} from "./styles";
+import { FormContainer, Form, FooterForm, ButtonBack } from "./styles";
 
 const Login: React.FC = () => {
   const history = useHistory();
@@ -33,15 +28,12 @@ const Login: React.FC = () => {
   );
 
   return (
-    <Container>
-      <HappyContainer>
-        <img src={logotipo} alt="Logotipo Happy" />
-        <div className="location">
-          <strong>Rio de Janeiro</strong>
-          <span>Rio de Janeiro</span>
-        </div>
-      </HappyContainer>
+    <HappyContainer>
       <FormContainer>
+        <ButtonBack type="button" onClick={history.goBack}>
+          <FiArrowLeft size={24} color="#15c3d6" />
+        </ButtonBack>
+
         <Form onSubmit={handleSubmit}>
           <fieldset>
             <legend>Fazer login</legend>
@@ -79,7 +71,7 @@ const Login: React.FC = () => {
           </FooterForm>
         </Form>
       </FormContainer>
-    </Container>
+    </HappyContainer>
   );
 };
 
