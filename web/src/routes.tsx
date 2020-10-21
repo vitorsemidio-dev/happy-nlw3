@@ -5,12 +5,14 @@ import Landing from "./pages/Landing";
 import OrphanagesMap from "./pages/OrphanagesMap";
 import CreateOrphanage from "./pages/CreateOrphanage";
 import Orphanage from "./pages/Orphanage";
+import Login from "./pages/Login";
 
 const Routes: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Landing} />
+        <Route path="/login" exact component={Login} />
         <Route path="/maps" component={OrphanagesMap} />
         <Route path="/create-orphanage" component={CreateOrphanage} />
         <Route path="/orphanages/:id" component={Orphanage} />
