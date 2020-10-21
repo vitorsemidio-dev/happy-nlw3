@@ -22,7 +22,7 @@ interface ISessionResponse {
 
 const Login: React.FC = () => {
   const history = useHistory();
-  const { signIn } = useContext(AuthContext);
+  const { user, signIn } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,20 +31,7 @@ const Login: React.FC = () => {
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
-      signIn({ email, password });
-
-      // try {
-      //   const { data } = await api.post<ISessionResponse>("/sessions", {
-      //     email,
-      //     password,
-      //   });
-
-      //   localStorage.setItem("@Happy:token", data.token);
-      //   history.push("/");
-      // } catch (err) {
-      //   console.log("fail");
-      //   console.log(err);
-      // }
+      await signIn({ email, password });
     },
     [email, password, signIn]
   );
