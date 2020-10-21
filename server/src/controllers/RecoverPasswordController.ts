@@ -13,7 +13,7 @@ class RecoverPasswordController {
       email,
     });
 
-    return response.send();
+    return response.status(204).json();
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -26,7 +26,7 @@ class RecoverPasswordController {
       password: String(password),
     });
 
-    return response.send();
+    return response.status(204).json();
   }
 }
 
