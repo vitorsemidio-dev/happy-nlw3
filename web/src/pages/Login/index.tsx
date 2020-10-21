@@ -2,8 +2,7 @@ import React, { FormEvent, useCallback, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import Input from "../../components/Input";
-
-import api from "../../services/api";
+import { useAuth } from "../../hooks/auth";
 
 import logotipo from "../../assets/img/logotipo.svg";
 
@@ -15,12 +14,9 @@ import {
   FooterForm,
 } from "./styles";
 
-interface ISessionResponse {
-  token: string;
-}
-
 const Login: React.FC = () => {
   const history = useHistory();
+  const { signIn } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,21 +25,11 @@ const Login: React.FC = () => {
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
+      await signIn({ email, password });
 
-      try {
-        const { data } = await api.post<ISessionResponse>("/sessions", {
-          email,
-          password,
-        });
-
-        localStorage.setItem("@Happy:token", data.token);
-        history.push("/");
-      } catch (err) {
-        console.log("fail");
-        console.log(err);
-      }
+      history.push("/");
     },
-    [email, history, password]
+    [email, history, password, signIn]
   );
 
   return (
