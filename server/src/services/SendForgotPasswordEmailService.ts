@@ -4,6 +4,7 @@ import path from "path";
 
 import AppError from "../errors/AppError";
 import User from "../models/User";
+import UserToken from "../models/UserToken";
 import MailProvider from "../shared/providers/mail/MailProvider";
 
 interface IRequest {
@@ -18,6 +19,7 @@ class SendForgotPasswordEmailService {
   }
   public async execute({ email }: IRequest): Promise<void> {
     const usersRepository = getRepository(User);
+    const userTokensRepository = getRepository(UserToken);
 
     const user = await usersRepository.findOne({
       where: { email },
@@ -29,6 +31,13 @@ class SendForgotPasswordEmailService {
 
     const token = randomBytes(3).toString("hex");
     console.log(token);
+
+    const userToken = userTokensRepository.create({
+      token,
+      user_id: user.id,
+    });
+
+    await userTokensRepository.save(userToken);
 
     const forgotPasswordTemplate = path.resolve(
       __dirname,

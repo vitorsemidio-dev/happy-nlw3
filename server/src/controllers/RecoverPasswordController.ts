@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
-import SendForgotPasswordEmailService from '../services/SendForgotPasswordEmailService';
-import ResetPasswordService from '../services/ResetPasswordService';
+import SendForgotPasswordEmailService from "../services/SendForgotPasswordEmailService";
+import ResetPasswordService from "../services/ResetPasswordService";
 
 class RecoverPasswordController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -17,12 +17,11 @@ class RecoverPasswordController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { email, token, password } = request.body;
+    const { token, password } = request.body;
 
     const resetPassword = new ResetPasswordService();
 
     await resetPassword.execute({
-      email,
       token,
       password: String(password),
     });
