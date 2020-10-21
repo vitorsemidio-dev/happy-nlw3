@@ -10,7 +10,7 @@ usersRoutes.get(
   "/",
   celebrate({
     [Segments.HEADERS]: Joi.object({
-      authorization: Joi.string().required().token(),
+      authorization: Joi.string().required(),
     }).unknown(),
   }),
   ensureAuthenticated,
