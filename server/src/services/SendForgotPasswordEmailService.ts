@@ -1,52 +1,20 @@
 import { getRepository } from "typeorm";
 import { randomBytes } from "crypto";
-import nodemailer, { Transporter } from "nodemailer";
 import path from "path";
 
 import AppError from "../errors/AppError";
 import User from "../models/User";
+import MailProvider from "../shared/providers/mail/MailProvider";
 
 interface IRequest {
   email: string;
 }
 
-interface ITemplateVariables {
-  [key: string]: string | number;
-}
-
-interface IParseMailTemplateDTO {
-  file: string;
-  variables: ITemplateVariables;
-}
-
-interface IMailContact {
-  name: string;
-  email: string;
-}
-interface ISendMailDTO {
-  to: IMailContact;
-  from?: IMailContact;
-  subject: string;
-  templateData: IParseMailTemplateDTO;
-}
-
 class SendForgotPasswordEmailService {
-  private client: Transporter;
+  private mailProvider: MailProvider;
 
   constructor() {
-    nodemailer.createTestAccount().then((account) => {
-      const transporter = nodemailer.createTransport({
-        host: account.smtp.host,
-        port: account.smtp.port,
-        secure: false,
-        auth: {
-          user: account.user,
-          pass: account.pass,
-        },
-      });
-
-      this.client = transporter;
-    });
+    this.mailProvider = new MailProvider();
   }
   public async execute({ email }: IRequest): Promise<void> {
     const usersRepository = getRepository(User);
@@ -62,14 +30,30 @@ class SendForgotPasswordEmailService {
     const token = randomBytes(3).toString("hex");
     console.log(token);
 
-    // send email
-
     const forgotPasswordTemplate = path.resolve(
       __dirname,
       "..",
-      "handlebars",
+      "shared",
+      "providers",
+      "mail",
       "forgot_password.hbs"
     );
+
+    await this.mailProvider.sendForgotPassword({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: "[Happy] Recuperação de senha",
+      templateData: {
+        file: forgotPasswordTemplate,
+        variables: {
+          name: user.name,
+          link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
+          token,
+        },
+      },
+    });
   }
 }
 

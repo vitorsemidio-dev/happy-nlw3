@@ -24,37 +24,25 @@ interface ISendMailDTO {
 }
 
 export default class EtherealMailProvider {
-  private client: Transporter;
+  private mailClient: Transporter;
   private mailTemplateProvider: HandlebarsMailTemplateProvider;
 
   constructor() {
-    nodemailer.createTestAccount().then((account) => {
-      const transporter = nodemailer.createTransport({
-        host: account.smtp.host,
-        port: account.smtp.port,
-        secure: false,
-        auth: {
-          user: account.user,
-          pass: account.pass,
-        },
-      });
-
-      this.client = transporter;
-    });
-
     this.mailTemplateProvider = new HandlebarsMailTemplateProvider();
   }
 
-  public async sendMail({
+  public async sendForgotPassword({
     from,
     to,
     subject,
     templateData,
   }: ISendMailDTO): Promise<void> {
-    const message = await this.client.sendMail({
+    await this.setMailClient();
+
+    const message = await this.mailClient.sendMail({
       from: {
-        name: from?.name || "Equipe GoBarber",
-        address: from?.email || "equipe@gobarber.com.br",
+        name: from?.name || "Equipe Happy",
+        address: from?.email || "equipe@happy.com.br",
       },
       to: {
         name: to.name,
@@ -66,5 +54,20 @@ export default class EtherealMailProvider {
 
     console.log("Message sent: %s", message.messageId);
     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(message));
+  }
+
+  private async setMailClient(): Promise<void> {
+    const account = await nodemailer.createTestAccount();
+    const transporter = nodemailer.createTransport({
+      host: account.smtp.host,
+      port: account.smtp.port,
+      secure: false,
+      auth: {
+        user: account.user,
+        pass: account.pass,
+      },
+    });
+
+    this.mailClient = transporter;
   }
 }
