@@ -6,6 +6,7 @@ import OrphanagesMap from "./pages/OrphanagesMap";
 import CreateOrphanage from "./pages/CreateOrphanage";
 import Orphanage from "./pages/Orphanage";
 import Login from "./pages/Login";
+import CreateUser from "./pages/CreateUser";
 
 const Routes: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const Routes: React.FC = () => {
       <Switch>
         <Route path="/" exact component={Landing} />
         <Route path="/login" exact component={Login} />
+        <Route path="/create-user" exact component={CreateUser} />
         <Route path="/maps" component={OrphanagesMap} />
         <Route path="/create-orphanage" component={CreateOrphanage} />
         <Route path="/orphanages/:id" component={Orphanage} />
