@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { FiArrowLeft } from "react-icons/fi";
+import { Link, useHistory } from "react-router-dom";
 
 import HappyContainer from "../../components/HappyContainer";
 import Input from "../../components/Input";
 
-import { FormContainer, Form, FooterForm } from "./styles";
+import { FormContainer, Form, FooterForm, ButtonBack } from "./styles";
 
 const CreateUser: React.FC = () => {
+  const history = useHistory();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +18,10 @@ const CreateUser: React.FC = () => {
   return (
     <HappyContainer>
       <FormContainer>
+        <ButtonBack type="button" onClick={history.goBack}>
+          <FiArrowLeft size={24} color="#15c3d6" />
+        </ButtonBack>
+
         <Form>
           <fieldset>
             <legend>Registrar usuário</legend>
