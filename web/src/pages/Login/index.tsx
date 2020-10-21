@@ -1,10 +1,8 @@
-import React, { FormEvent, useCallback, useState, useContext } from "react";
+import React, { FormEvent, useCallback, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import Input from "../../components/Input";
-import { AuthContext } from "../../hooks/auth";
-
-import api from "../../services/api";
+import { useAuth } from "../../hooks/auth";
 
 import logotipo from "../../assets/img/logotipo.svg";
 
@@ -16,13 +14,9 @@ import {
   FooterForm,
 } from "./styles";
 
-interface ISessionResponse {
-  token: string;
-}
-
 const Login: React.FC = () => {
   const history = useHistory();
-  const { user, signIn } = useContext(AuthContext);
+  const { signIn } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,8 +26,10 @@ const Login: React.FC = () => {
     async (e: FormEvent) => {
       e.preventDefault();
       await signIn({ email, password });
+
+      history.push("/");
     },
-    [email, password, signIn]
+    [email, history, password, signIn]
   );
 
   return (

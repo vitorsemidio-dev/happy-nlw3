@@ -1,9 +1,10 @@
-import React, { createContext, useCallback, useState } from "react";
+import React, { createContext, useCallback, useState, useContext } from "react";
 import api from "../services/api";
 
 interface IAuthContext {
   user: any;
   signIn(credentials: ISignInCredentials): Promise<void>;
+  signOut(): void;
 }
 
 interface ISignInCredentials {
@@ -16,7 +17,7 @@ interface AuthState {
   user: any;
 }
 
-export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
+const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
@@ -51,9 +52,22 @@ export const AuthProvider: React.FC = ({ children }) => {
     []
   );
 
+  const signOut = useCallback(() => {
+    localStorage.removeItem("@GoBarber:token");
+    localStorage.removeItem("@GoBarber:user");
+
+    setData({} as AuthState);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn }}>
+    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export function useAuth(): IAuthContext {
+  const context = useContext(AuthContext);
+
+  return context;
+}
