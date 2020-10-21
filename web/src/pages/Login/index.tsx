@@ -1,6 +1,6 @@
 import React, { FormEvent, useCallback, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft, FiLogIn } from "react-icons/fi";
 
 import Input from "../../components/Input";
 import HappyContainer from "../../components/HappyContainer";
@@ -68,6 +68,11 @@ const Login: React.FC = () => {
             <button type="submit">Entrar</button>
 
             <Link to="/forgot-password">Esqueci minha senha</Link>
+
+            <Link to="/create-user">
+              <FiLogIn />
+              Criar Conta
+            </Link>
           </FooterForm>
         </Form>
       </FormContainer>

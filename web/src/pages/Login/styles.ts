@@ -66,6 +66,23 @@ export const FooterForm = styled.footer`
     text-align: center;
     text-decoration: none;
   }
+
+  a + a {
+    color: #15c3d6;
+    display: block;
+    margin-top: 24px;
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      margin-right: 16px;
+    }
+    &:hover {
+      color: #019bac;
+    }
+  }
 `;
 
 export const ButtonBack = styled.button`
