@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { FormEvent, useCallback, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 import Input from "../../components/Input";
+
+import api from "../../services/api";
 
 import logotipo from "../../assets/img/logotipo.svg";
 
@@ -13,9 +15,36 @@ import {
   FooterForm,
 } from "./styles";
 
+interface ISessionResponse {
+  token: string;
+}
+
 const Login: React.FC = () => {
+  const history = useHistory();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [keepConect, setKeepConect] = useState(true);
+
+  const handleSubmit = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
+
+      try {
+        const { data } = await api.post<ISessionResponse>("/sessions", {
+          email,
+          password,
+        });
+
+        localStorage.setItem("@Happy:token", data.token);
+        history.push("/");
+      } catch (err) {
+        console.log("fail");
+        console.log(err);
+      }
+    },
+    [email, history, password]
+  );
 
   return (
     <Container>
@@ -27,7 +56,7 @@ const Login: React.FC = () => {
         </div>
       </HappyContainer>
       <FormContainer>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <fieldset>
             <legend>Fazer login</legend>
 
@@ -50,11 +79,15 @@ const Login: React.FC = () => {
 
           <FooterForm>
             <label>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={keepConect}
+                onChange={(e) => setKeepConect(!keepConect)}
+              />
               Manter-me conectado
             </label>
 
-            <button>Entrar</button>
+            <button type="submit">Entrar</button>
 
             <Link to="/forgot-password">Esqueci minha senha</Link>
           </FooterForm>
