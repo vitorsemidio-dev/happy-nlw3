@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { FiEdit, FiTrash } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 import api from "../../services/api";
 
@@ -29,9 +30,9 @@ const OrphanageCard: React.FC<OrphanageCardProps> = ({
       <footer>
         <strong>{orphanage.name}</strong>
         <div>
-          <button type="button">
+          <Link to={`/orphanages/${orphanage.id}/edit`}>
             <FiEdit size={24} color="#15C3D6" />
-          </button>
+          </Link>
           <button type="button">
             <FiTrash
               size={24}

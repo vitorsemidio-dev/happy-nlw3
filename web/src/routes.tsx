@@ -11,6 +11,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
 import DashboardPending from "./pages/DashboardPending";
+import OrphanageForm from "./components/OrphanageForm";
 
 const Routes: React.FC = () => {
   return (
@@ -25,7 +26,8 @@ const Routes: React.FC = () => {
         <Route path="/create-user" exact component={CreateUser} />
         <Route path="/maps" component={OrphanagesMap} />
         <Route path="/create-orphanage" component={CreateOrphanage} />
-        <Route path="/orphanages/:id" component={Orphanage} />
+        <Route path="/orphanages/:id" exact component={Orphanage} />
+        <Route path="/orphanages/:id/edit" exact component={OrphanageForm} />
       </Switch>
     </BrowserRouter>
   );

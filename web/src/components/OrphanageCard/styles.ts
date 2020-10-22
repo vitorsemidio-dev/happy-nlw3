@@ -30,6 +30,7 @@ export const CardContainer = styled.div`
     div {
       display: flex;
 
+      a,
       button {
         cursor: pointer;
         width: 48px;
@@ -50,7 +51,7 @@ export const CardContainer = styled.div`
           background-color: #cedee5;
         }
 
-        & + button {
+        & + * {
           margin-left: 8px;
         }
       }
