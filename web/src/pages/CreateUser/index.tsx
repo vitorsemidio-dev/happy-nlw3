@@ -45,7 +45,7 @@ const CreateUser: React.FC = () => {
           <FiArrowLeft size={24} color="#15c3d6" />
         </ButtonBack>
 
-        <Form onSubmit={(e) => handleSubmit(e)}>
+        <Form onSubmit={handleSubmit}>
           <fieldset>
             <legend>Fazer seu cadastro</legend>
 
