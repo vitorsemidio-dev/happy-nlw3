@@ -1,6 +1,6 @@
 import React, { FormEvent, useCallback, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import HappyContainer from "../../components/HappyContainer";
 import Input from "../../components/Input";
@@ -9,10 +9,19 @@ import api from "../../services/api";
 
 import { FormContainer, Form, ButtonBack } from "./styles";
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const ResetPassword: React.FC = () => {
   const history = useHistory();
+  let query = useQuery();
 
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(() => {
+    const initialToken = query.get("token");
+
+    return initialToken || "";
+  });
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
