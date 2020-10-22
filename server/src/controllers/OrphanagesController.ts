@@ -84,6 +84,16 @@ class OrphanagesController {
 
     return response.status(201).json(orphanage);
   }
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const orphanagesRepository = getRepository(Orphanage);
+
+    await orphanagesRepository.delete(id);
+
+    return response.status(204).json();
+  }
 }
 
 export default new OrphanagesController();

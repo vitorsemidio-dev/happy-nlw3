@@ -6,11 +6,12 @@ export const Container = styled.div`
 
   main {
     flex: 1;
+    padding-left: 96px;
   }
 `;
 
 export const OrphanageSessionContainer = styled.section`
-  width: 100%;
+  width: 90%;
   max-width: 1120px;
   margin: 64px auto;
 
