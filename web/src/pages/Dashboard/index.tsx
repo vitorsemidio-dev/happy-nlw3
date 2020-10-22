@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { FiEdit, FiTrash } from "react-icons/fi";
 
@@ -21,17 +21,26 @@ interface Orphanage {
 const Dashboard: React.FC = () => {
   const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
 
-  useEffect(() => {
-    const loadOrphanages = async () => {
-      const { data } = await api.get<Orphanage[]>("/orphanages");
+  const loadOrphanages = useCallback(async () => {
+    const { data } = await api.get<Orphanage[]>("/orphanages");
 
-      setOrphanages(data);
-    };
-
-    loadOrphanages();
+    setOrphanages(data);
   }, []);
 
+  useEffect(() => {
+    loadOrphanages();
+  }, [loadOrphanages]);
+
   const orphanagesFound = useMemo(() => orphanages.length, [orphanages]);
+
+  const handleDeleteOrphanage = useCallback(
+    async (orphanage: Orphanage) => {
+      await api.delete(`/orphanages/${orphanage.id}`);
+
+      loadOrphanages();
+    },
+    [loadOrphanages]
+  );
 
   return (
     <Container>
@@ -54,7 +63,11 @@ const Dashboard: React.FC = () => {
                       <FiEdit size={24} color="#15C3D6" />
                     </button>
                     <button type="button">
-                      <FiTrash size={24} color="#15C3D6" />
+                      <FiTrash
+                        size={24}
+                        color="#15C3D6"
+                        onClick={() => handleDeleteOrphanage(orphanage)}
+                      />
                     </button>
                   </div>
                 </footer>
