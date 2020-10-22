@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { FiMapPin, FiAlertCircle } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 import api from "../../services/api";
 
@@ -9,6 +11,7 @@ import {
   Container,
   OrphanageSessionContainer,
   OrphanageListContainer,
+  DashboardLinksContainer,
 } from "./styles";
 
 interface Orphanage {
@@ -42,7 +45,16 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      <Sidebar />
+      <Sidebar>
+        <DashboardLinksContainer>
+          <Link to="/dashboard" className="active">
+            <FiMapPin size={24} />
+          </Link>
+          <Link to="/dashboard/pending">
+            <FiAlertCircle size={24} color="#fff" />
+          </Link>
+        </DashboardLinksContainer>
+      </Sidebar>
       <main>
         <OrphanageSessionContainer>
           <header>

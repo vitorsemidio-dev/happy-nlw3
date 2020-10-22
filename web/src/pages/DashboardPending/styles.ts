@@ -45,7 +45,7 @@ export const OrphanageListContainer = styled.div`
   grid-gap: 32px;
 `;
 
-export const DashboardButtonsContainer = styled.div`
+export const DashboardLinksContainer = styled.div`
   display: flex;
   flex-direction: column;
   > * + * {
@@ -64,7 +64,7 @@ export const DashboardButtonsContainer = styled.div`
 
     cursor: pointer;
 
-    transition: background-color 0.2s;
+    transition: background-color 0.4s, color 0.4s;
 
     display: flex;
     justify-content: center;
@@ -73,6 +73,12 @@ export const DashboardButtonsContainer = styled.div`
 
   a:hover,
   button:hover {
+    color: #fff;
     background: #17d6eb;
+  }
+
+  .active {
+    color: #0089a5;
+    background-color: #ffd666;
   }
 `;

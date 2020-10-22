@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FiMapPin, FiAlertCircle } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 import OrphanageCard from "../../components/OrphanageCard";
 import Sidebar from "../../components/Sidebar";
@@ -10,7 +11,7 @@ import {
   Container,
   OrphanageSessionContainer,
   OrphanageListContainer,
-  DashboardButtonsContainer,
+  DashboardLinksContainer,
 } from "./styles";
 
 interface Orphanage {
@@ -22,7 +23,7 @@ const DashboardPending: React.FC = () => {
   const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
 
   const loadOrphanages = useCallback(async () => {
-    const { data } = await api.get<Orphanage[]>("/orphanages");
+    const { data } = await api.get<Orphanage[]>("/orphanages?status=pending");
 
     setOrphanages(data);
   }, []);
@@ -45,14 +46,14 @@ const DashboardPending: React.FC = () => {
   return (
     <Container>
       <Sidebar>
-        <DashboardButtonsContainer>
-          <button style={{ backgroundColor: "#12AFCB", borderRadius: 20 }}>
+        <DashboardLinksContainer>
+          <Link to="/dashboard">
             <FiMapPin size={24} color="#fff" />
-          </button>
-          <button style={{ backgroundColor: "#12AFCB", borderRadius: 20 }}>
-            <FiAlertCircle size={24} color="#fff" />
-          </button>
-        </DashboardButtonsContainer>
+          </Link>
+          <Link to="/dashboard/pending" className="active">
+            <FiAlertCircle size={24} />
+          </Link>
+        </DashboardLinksContainer>
       </Sidebar>
       <main>
         <OrphanageSessionContainer>
