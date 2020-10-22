@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { FormEvent, useCallback, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link, useHistory } from "react-router-dom";
 
 import HappyContainer from "../../components/HappyContainer";
 import Input from "../../components/Input";
+
+import api from "../../services/api";
 
 import { FormContainer, Form, FooterForm, ButtonBack } from "./styles";
 
@@ -15,6 +17,27 @@ const CreateUser: React.FC = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
+  const handleSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+      api
+        .post("/users", {
+          name,
+          email,
+          password,
+          passwordConfirmation,
+        })
+        .then((response) => {
+          alert("Parabéns! Sua conta foi criada com sucesso");
+          history.push("/login");
+        })
+        .catch((err) => {
+          alert("Falha ao realizar registro");
+        });
+    },
+    [name, email, password, passwordConfirmation, history]
+  );
+
   return (
     <HappyContainer>
       <FormContainer>
@@ -22,9 +45,9 @@ const CreateUser: React.FC = () => {
           <FiArrowLeft size={24} color="#15c3d6" />
         </ButtonBack>
 
-        <Form>
+        <Form onSubmit={(e) => handleSubmit(e)}>
           <fieldset>
-            <legend>Registrar usuário</legend>
+            <legend>Fazer seu cadastro</legend>
 
             <Input
               name="name"
