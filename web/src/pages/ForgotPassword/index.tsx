@@ -1,14 +1,45 @@
-import React, { useCallback, useState } from "react";
+import React, { FormEvent, useCallback, useState } from "react";
 
 import Input from "../../components/Input";
 import HappyContainer from "../../components/HappyContainer";
 
+import api from "../../services/api";
+
 import { FormContainer, Form } from "./styles";
+import { useHistory } from "react-router-dom";
 
 const ForgotPassword: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const history = useHistory();
 
-  const handleSubmit = useCallback(() => {}, []);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
+      if (loading) return;
+
+      setLoading(true);
+      try {
+        await api.post("/passwords/forgot", {
+          email,
+        });
+
+        alert(
+          "Recuperação de senha solicitada com sucesso! Acesse seu e-mail para informar a nova senha"
+        );
+
+        history.push("/reset-password");
+      } catch (err) {
+        alert(
+          "Falha ao tentar recuperação de senha. Tente novamente mais tarde"
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [email, history, loading]
+  );
 
   return (
     <HappyContainer>
@@ -32,7 +63,9 @@ const ForgotPassword: React.FC = () => {
           </fieldset>
 
           <footer>
-            <button type="submit">Confirmar</button>
+            <button disabled={loading} type="submit">
+              Confirmar
+            </button>
           </footer>
         </Form>
       </FormContainer>
