@@ -70,5 +70,34 @@ export const OrphanageCard = styled.div`
     strong {
       color: #4d6f80;
     }
+
+    div {
+      display: flex;
+
+      button {
+        cursor: pointer;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background-color: #ebf2f5;
+
+        outline: none;
+        border: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #cedee5;
+        }
+
+        & + button {
+          margin-left: 8px;
+        }
+      }
+    }
   }
 `;
