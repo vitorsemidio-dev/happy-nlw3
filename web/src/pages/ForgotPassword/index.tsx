@@ -5,8 +5,9 @@ import HappyContainer from "../../components/HappyContainer";
 
 import api from "../../services/api";
 
-import { FormContainer, Form } from "./styles";
+import { FormContainer, Form, ButtonBack } from "./styles";
 import { useHistory } from "react-router-dom";
+import { FiArrowLeft } from "react-icons/fi";
 
 const ForgotPassword: React.FC = () => {
   const history = useHistory();
@@ -44,6 +45,9 @@ const ForgotPassword: React.FC = () => {
   return (
     <HappyContainer>
       <FormContainer>
+        <ButtonBack type="button" onClick={history.goBack}>
+          <FiArrowLeft size={24} color="#15c3d6" />
+        </ButtonBack>
         <Form onSubmit={handleSubmit}>
           <fieldset>
             <legend>

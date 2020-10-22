@@ -60,3 +60,29 @@ export const Form = styled.form`
     }
   }
 `;
+
+export const ButtonBack = styled.button`
+  position: absolute;
+  top: 32px;
+  right: 32px;
+
+  width: 48px;
+  height: 48px;
+
+  border: 0;
+
+  background: #ebf2f5;
+  border-radius: 16px;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background: #d8e1e5;
+  }
+`;
