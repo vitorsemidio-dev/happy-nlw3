@@ -41,10 +41,6 @@ export const FooterForm = styled.footer`
     margin-top: 24px;
   }
 
-  input[type="checkbox"] {
-    margin-right: 16px;
-  }
-
   button {
     width: 100%;
     height: 64px;
@@ -65,23 +61,6 @@ export const FooterForm = styled.footer`
   a {
     text-align: center;
     text-decoration: none;
-  }
-
-  a + a {
-    color: #15c3d6;
-    display: block;
-    margin-top: 24px;
-    text-decoration: none;
-    transition: color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    svg {
-      margin-right: 16px;
-    }
-    &:hover {
-      color: #019bac;
-    }
   }
 `;
 
