@@ -10,13 +10,15 @@ import CreateUser from "./pages/CreateUser";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
+import DashboardPending from "./pages/DashboardPending";
 
 const Routes: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Landing} />
-        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/dashboard" exact component={Dashboard} />
+        <Route path="/dashboard/pending" component={DashboardPending} />
         <Route path="/login" exact component={Login} />
         <Route path="/forgot-password" exact component={ForgotPassword} />
         <Route path="/reset-password" exact component={ResetPassword} />

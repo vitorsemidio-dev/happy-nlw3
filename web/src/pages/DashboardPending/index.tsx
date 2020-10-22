@@ -1,14 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-
-import api from "../../services/api";
+import { FiMapPin, FiAlertCircle } from "react-icons/fi";
 
 import OrphanageCard from "../../components/OrphanageCard";
 import Sidebar from "../../components/Sidebar";
+
+import api from "../../services/api";
 
 import {
   Container,
   OrphanageSessionContainer,
   OrphanageListContainer,
+  DashboardButtonsContainer,
 } from "./styles";
 
 interface Orphanage {
@@ -16,7 +18,7 @@ interface Orphanage {
   name: string;
 }
 
-const Dashboard: React.FC = () => {
+const DashboardPending: React.FC = () => {
   const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
 
   const loadOrphanages = useCallback(async () => {
@@ -42,11 +44,20 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      <Sidebar />
+      <Sidebar>
+        <DashboardButtonsContainer>
+          <button style={{ backgroundColor: "#12AFCB", borderRadius: 20 }}>
+            <FiMapPin size={24} color="#fff" />
+          </button>
+          <button style={{ backgroundColor: "#12AFCB", borderRadius: 20 }}>
+            <FiAlertCircle size={24} color="#fff" />
+          </button>
+        </DashboardButtonsContainer>
+      </Sidebar>
       <main>
         <OrphanageSessionContainer>
           <header>
-            <h2>Orfanatos Cadastrados</h2>
+            <h2>Cadastros Pendentes</h2>
             <span>{orphanagesFound} orfanatos</span>
           </header>
 
@@ -65,4 +76,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPending;
