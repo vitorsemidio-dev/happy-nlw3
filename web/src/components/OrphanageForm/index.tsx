@@ -51,6 +51,10 @@ interface OrphanageParams {
   id: string;
 }
 
+interface SaveType {
+  type: "create" | "update";
+}
+
 const OrphanageForm: React.FC<OrphanageFormProps> = ({
   orphanage,
   orphanage_id,
@@ -87,41 +91,63 @@ const OrphanageForm: React.FC<OrphanageFormProps> = ({
     });
   }, []);
 
+  const buildFormData = useCallback(() => {
+    const { latitude, longitude } = position;
+    const data = new FormData();
+
+    data.append("name", name);
+    data.append("latitude", String(latitude));
+    data.append("longitude", String(longitude));
+    data.append("about", about);
+    data.append("instructions", instructions);
+    data.append("opening_hours", opening_hours);
+    data.append("open_on_weekends", String(open_on_weekends));
+
+    if (images) {
+      images.forEach((image) => data.append("images", image));
+    }
+
+    return data;
+  }, [
+    position,
+    open_on_weekends,
+    name,
+    about,
+    instructions,
+    opening_hours,
+    images,
+  ]);
+
+  const saveOrphanage = useCallback(
+    async (saveType: SaveType, data: FormData) => {
+      if (saveType.type === "create") {
+        await api.post("/orphanages", data);
+
+        alert("Cadastro realizado com sucesso");
+      } else {
+        await api.put("/orphanages", data);
+
+        alert("Cadastro atualizado com sucesso");
+      }
+    },
+    []
+  );
+
   const handleSubmit = useCallback(
     async (event: FormEvent) => {
       event.preventDefault();
 
-      const { latitude, longitude } = position;
-      const data = new FormData();
+      const data = buildFormData();
 
-      data.append("name", name);
-      data.append("latitude", String(latitude));
-      data.append("longitude", String(longitude));
-      data.append("about", about);
-      data.append("instructions", instructions);
-      data.append("opening_hours", opening_hours);
-      data.append("open_on_weekends", String(open_on_weekends));
+      const saveType: SaveType = params.id
+        ? { type: "create" }
+        : { type: "update" };
 
-      if (images) {
-        images.forEach((image) => data.append("images", image));
-      }
-
-      await api.post("/orphanages", data);
-
-      alert("Cadastro realizado com sucesso");
+      saveOrphanage(saveType, data);
 
       history.push("/maps");
     },
-    [
-      position,
-      open_on_weekends,
-      name,
-      about,
-      instructions,
-      opening_hours,
-      history,
-      images,
-    ]
+    [buildFormData, history, params.id, saveOrphanage]
   );
 
   const handleSelectImages = useCallback(
