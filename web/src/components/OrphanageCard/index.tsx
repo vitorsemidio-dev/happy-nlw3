@@ -1,8 +1,6 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { Link } from "react-router-dom";
-
-import api from "../../services/api";
 
 import { CardContainer } from "./styles";
 
@@ -20,10 +18,6 @@ const OrphanageCard: React.FC<OrphanageCardProps> = ({
   orphanage,
   onDeleteOrphanage,
 }) => {
-  // const handleDeleteOrphanage = useCallback(async (orphanage: Orphanage) => {
-  //   await api.delete(`/orphanages/${orphanage.id}`);
-  // }, []);
-
   return (
     <CardContainer>
       <div className="map">Marker</div>

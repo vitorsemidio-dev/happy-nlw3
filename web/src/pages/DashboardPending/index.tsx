@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FiMapPin, FiAlertCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
-import OrphanageCard from "../../components/OrphanageCard";
+import OrphanageCardPending from "../../components/OrphanageCardPending";
 import Sidebar from "../../components/Sidebar";
 
 import api from "../../services/api";
@@ -34,15 +34,6 @@ const DashboardPending: React.FC = () => {
 
   const orphanagesFound = useMemo(() => orphanages.length, [orphanages]);
 
-  const handleDeleteOrphanage = useCallback(
-    async (orphanage: Orphanage) => {
-      await api.delete(`/orphanages/${orphanage.id}`);
-
-      loadOrphanages();
-    },
-    [loadOrphanages]
-  );
-
   return (
     <Container>
       <Sidebar>
@@ -64,11 +55,10 @@ const DashboardPending: React.FC = () => {
 
           <OrphanageListContainer>
             {orphanages.map((orphanage) => (
-              <OrphanageCard
+              <OrphanageCardPending
                 key={String(orphanage.id)}
                 orphanage={orphanage}
-                onDeleteOrphanage={handleDeleteOrphanage}
-              ></OrphanageCard>
+              ></OrphanageCardPending>
             ))}
           </OrphanageListContainer>
         </OrphanageSessionContainer>
