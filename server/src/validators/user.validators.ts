@@ -6,11 +6,13 @@ const userValidators = {
       authorization: Joi.string().required(),
     }).unknown(),
   },
+
   show: {
     [Segments.PARAMS]: {
       id: Joi.number().required(),
     },
   },
+
   create: {
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -19,11 +21,13 @@ const userValidators = {
       passwordConfirmation: Joi.string().required().valid(Joi.ref("password")),
     },
   },
+
   delete: {
     [Segments.PARAMS]: {
       id: Joi.number().required(),
     },
   },
+
   put: {
     [Segments.PARAMS]: {
       id: Joi.number().required(),

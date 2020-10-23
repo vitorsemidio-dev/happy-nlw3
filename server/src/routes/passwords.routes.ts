@@ -12,6 +12,7 @@ passwordsRoutes.put(
   celebrate(passwordValidators.resetPassword),
   recoverPasswordController.update
 );
+
 passwordsRoutes.post(
   "/forgot",
   celebrate(passwordValidators.forgotPassword),
