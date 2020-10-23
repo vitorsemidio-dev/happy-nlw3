@@ -1,66 +1,40 @@
 import { Router } from "express";
-import { celebrate, Segments, Joi } from "celebrate";
+import { celebrate } from "celebrate";
 
 import usersController from "../controllers/UsersController";
 import ensureAuthenticated from "../middlewares/ensureAuthenticated";
+import userValidators from "../validators/user.validators";
 
 const usersRoutes = Router();
 
 usersRoutes.get(
   "/",
-  celebrate({
-    [Segments.HEADERS]: Joi.object({
-      authorization: Joi.string().required(),
-    }).unknown(),
-  }),
+  celebrate(userValidators.index, { abortEarly: false }),
   ensureAuthenticated,
   usersController.index
 );
 
 usersRoutes.get(
   "/:id",
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.number().required(),
-    },
-  }),
+  celebrate(userValidators.show, { abortEarly: false }),
   usersController.show
 );
 
 usersRoutes.post(
   "/",
-  celebrate({
-    [Segments.BODY]: {
-      name: Joi.string().required(),
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
-      passwordConfirmation: Joi.string().required().valid(Joi.ref("password")),
-    },
-  }),
+  celebrate(userValidators.create, { abortEarly: false }),
   usersController.create
 );
 
 usersRoutes.delete(
   "/:id",
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.number().required(),
-    },
-  }),
+  celebrate(userValidators.delete, { abortEarly: false }),
   usersController.delete
 );
 
 usersRoutes.put(
   "/:id",
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.number().required(),
-    },
-    [Segments.BODY]: {
-      name: Joi.string(),
-      email: Joi.string().email(),
-    },
-  }),
+  celebrate(userValidators.put, { abortEarly: false }),
   usersController.update
 );
 
