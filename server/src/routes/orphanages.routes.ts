@@ -11,5 +11,10 @@ orphanagesRoutes.post("/", upload.array("images"), OrphanagesController.create);
 orphanagesRoutes.get("/", OrphanagesController.index);
 orphanagesRoutes.get("/:id", OrphanagesController.show);
 orphanagesRoutes.delete("/:id", OrphanagesController.delete);
+orphanagesRoutes.put(
+  "/:id",
+  upload.array("images"),
+  OrphanagesController.update
+);
 
 export default orphanagesRoutes;

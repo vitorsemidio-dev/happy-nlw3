@@ -94,6 +94,66 @@ class OrphanagesController {
 
     return response.status(204).json();
   }
+
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const {
+      name,
+      latitude,
+      longitude,
+      about,
+      instructions,
+      opening_hours,
+      open_on_weekends,
+    } = request.body;
+
+    const orphanagesRepository = getRepository(Orphanage);
+
+    const data = {
+      name,
+      latitude,
+      longitude,
+      about,
+      instructions,
+      opening_hours,
+      open_on_weekends: open_on_weekends === "true",
+    };
+
+    // const schema = Yup.object().shape({
+    //   name: Yup.string().required("Nome é obrigatório"),
+    //   latitude: Yup.number().required(),
+    //   longitude: Yup.number().required(),
+    //   about: Yup.string().required().max(300),
+    //   instructions: Yup.string().required(),
+    //   opening_hours: Yup.string().required(),
+    //   open_on_weekends: Yup.boolean().required(),
+    // });
+
+    // await schema.validate(data, {
+    //   abortEarly: false,
+    // });
+
+    // const orphanage = orphanagesRepository.create(data);
+
+    console.log(id);
+    console.table(data);
+    console.log(data);
+
+    let orphanage = await orphanagesRepository.findOne(id);
+
+    if (!orphanage) {
+      return response.status(404).json({
+        mensagem: "Orfanato não encontrado",
+      });
+    }
+
+    orphanage = Object.assign(orphanage, { ...data });
+
+    // await orphanagesRepository.save(orphanage);
+
+    return response.json(data);
+  }
 }
 
 export default new OrphanagesController();
