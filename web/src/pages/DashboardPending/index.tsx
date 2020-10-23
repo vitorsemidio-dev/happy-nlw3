@@ -17,6 +17,8 @@ import {
 interface Orphanage {
   id: number;
   name: string;
+  latitude: number;
+  longitude: number;
 }
 
 const DashboardPending: React.FC = () => {

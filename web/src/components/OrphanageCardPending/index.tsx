@@ -2,11 +2,15 @@ import React from "react";
 import { FiArrowRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
+import MapStaticCard from "../MapStaticCard";
+
 import { CardContainer } from "./styles";
 
 interface Orphanage {
   id: number;
   name: string;
+  latitude: number;
+  longitude: number;
 }
 
 interface OrphanageCardProps {
@@ -16,7 +20,12 @@ interface OrphanageCardProps {
 const OrphanageCardPending: React.FC<OrphanageCardProps> = ({ orphanage }) => {
   return (
     <CardContainer>
-      <div className="map">Marker</div>
+      <div className="map">
+        <MapStaticCard
+          latitude={orphanage.latitude}
+          longitude={orphanage.longitude}
+        />
+      </div>
       <footer>
         <strong>{orphanage.name}</strong>
         <div>

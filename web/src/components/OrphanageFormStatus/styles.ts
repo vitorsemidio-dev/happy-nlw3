@@ -152,7 +152,6 @@ export const Form = styled.form`
       height: 64px;
       border: 0;
       cursor: pointer;
-      /* background: #3cdc8c; */
       border-radius: 20px;
       color: #ffffff;
       font-weight: 800;
@@ -166,10 +165,6 @@ export const Form = styled.form`
 
     button svg {
       margin-right: 16px;
-    }
-
-    button:hover {
-      /* background: #36cf82; */
     }
 
     .approve {
