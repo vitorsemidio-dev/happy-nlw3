@@ -15,12 +15,10 @@ interface OrphanageCardProps {
 const OrphanageCardPending: React.FC<OrphanageCardProps> = ({ orphanage }) => {
   return (
     <CardContainer>
-      <div className="map">
-        <MapStaticCard
-          latitude={orphanage.latitude}
-          longitude={orphanage.longitude}
-        />
-      </div>
+      <MapStaticCard
+        latitude={orphanage.latitude}
+        longitude={orphanage.longitude}
+      />
       <footer>
         <strong>{orphanage.name}</strong>
         <div>

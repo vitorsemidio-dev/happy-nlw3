@@ -5,13 +5,6 @@ export const CardContainer = styled.div`
   border-radius: 20px;
   overflow: hidden;
 
-  div.map {
-    width: 100%;
-    height: 220px;
-    border-radius: 20px;
-    overflow: hidden;
-  }
-
   footer {
     display: flex;
     justify-content: space-between;

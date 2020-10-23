@@ -20,12 +20,10 @@ const OrphanageCard: React.FC<OrphanageCardProps> = ({
   console.log(orphanage);
   return (
     <CardContainer>
-      <div className="map">
-        <MapStaticCard
-          latitude={orphanage.latitude}
-          longitude={orphanage.longitude}
-        />
-      </div>
+      <MapStaticCard
+        latitude={orphanage.latitude}
+        longitude={orphanage.longitude}
+      />
       <footer>
         <strong>{orphanage.name}</strong>
         <div>
