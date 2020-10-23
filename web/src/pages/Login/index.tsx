@@ -22,7 +22,7 @@ const Login: React.FC = () => {
       e.preventDefault();
       await signIn({ email, password });
 
-      history.push("/");
+      history.push("/dashboard");
     },
     [email, history, password, signIn]
   );
