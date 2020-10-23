@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
+import { getRepository, IsNull } from "typeorm";
 import * as Yup from "yup";
 
 import orphanageView from "../views/orphanages_view";
@@ -7,10 +7,16 @@ import Orphanage from "../models/Orphanage";
 
 class OrphanagesController {
   async index(request: Request, response: Response) {
+    const { status } = request.query;
+
+    const showPending = (status && status === "pending") || false;
     const orphanagesRepository = getRepository(Orphanage);
 
     const orphanages = await orphanagesRepository.find({
       relations: ["images"],
+      where: {
+        approved: showPending ? IsNull() : true,
+      },
     });
 
     return response.json(orphanageView.renderMany(orphanages));
