@@ -87,6 +87,10 @@ const OrphanageFormStatus: React.FC = () => {
     });
   }, []);
 
+  const navigateToDashboardPending = useCallback(() => {
+    history.push("/dashboard/pending");
+  }, [history]);
+
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
@@ -94,9 +98,9 @@ const OrphanageFormStatus: React.FC = () => {
         approved,
       });
 
-      // history.push("/maps");
+      navigateToDashboardPending();
     },
-    [approved, params.id]
+    [approved, navigateToDashboardPending, params.id]
   );
 
   const handleSelectImages = useCallback(
@@ -127,19 +131,21 @@ const OrphanageFormStatus: React.FC = () => {
             <legend>Dados</legend>
 
             <Map
-              center={[-22.932017, -43.2086569]}
+              center={[position.latitude, position.longitude]}
+              zoom={16}
               style={{ width: "100%", height: 280 }}
-              zoom={15}
-              onclick={handleMapClick}
+              dragging={false}
+              touchZoom={false}
+              zoomControl={false}
+              scrollWheelZoom={false}
+              doubleClickZoom={false}
             >
               <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              {position.latitude !== 0 && (
-                <Marker
-                  interactive={false}
-                  icon={happyMapIcon}
-                  position={[position.latitude, position.longitude]}
-                />
-              )}
+              <Marker
+                interactive={false}
+                icon={happyMapIcon}
+                position={[position.latitude, position.longitude]}
+              />
             </Map>
 
             <Input
