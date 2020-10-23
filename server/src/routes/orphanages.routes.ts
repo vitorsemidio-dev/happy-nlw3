@@ -3,6 +3,7 @@ import multer from "multer";
 
 import uploadConfig from "../config/upload";
 import OrphanagesController from "../controllers/OrphanagesController";
+import OrphanagesPendingController from "../controllers/OrphanagesPendingController";
 
 const orphanagesRoutes = Router();
 const upload = multer(uploadConfig);
@@ -16,5 +17,7 @@ orphanagesRoutes.put(
   upload.array("images"),
   OrphanagesController.update
 );
+
+orphanagesRoutes.put("/:id/status", OrphanagesPendingController.update);
 
 export default orphanagesRoutes;

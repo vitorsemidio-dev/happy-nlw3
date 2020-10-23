@@ -35,11 +35,6 @@ interface Orphanage {
   }>;
 }
 
-interface OrphanageFormProps {
-  orphanage?: Orphanage;
-  orphanage_id?: string;
-}
-
 const happyMapIcon = Leaflet.icon({
   iconUrl: mapMarkerImg,
   iconSize: [58, 68],
@@ -50,15 +45,7 @@ const happyMapIcon = Leaflet.icon({
 interface OrphanageParams {
   id: string;
 }
-
-interface SaveType {
-  type: "create" | "update";
-}
-
-const OrphanageForm: React.FC<OrphanageFormProps> = ({
-  orphanage,
-  orphanage_id,
-}) => {
+const OrphanageFormStatus: React.FC = () => {
   const history = useHistory();
   const params = useParams<OrphanageParams>();
 
@@ -70,6 +57,8 @@ const OrphanageForm: React.FC<OrphanageFormProps> = ({
   const [about, setAbout] = useState("");
   const [instructions, setInstructions] = useState("");
   const [opening_hours, setOpeningHours] = useState("");
+
+  const [approved, setApproved] = useState(false);
 
   useEffect(() => {
     if (!params || !params.id) return;
@@ -98,63 +87,16 @@ const OrphanageForm: React.FC<OrphanageFormProps> = ({
     });
   }, []);
 
-  const buildFormData = useCallback(() => {
-    const { latitude, longitude } = position;
-    const data = new FormData();
-
-    data.append("name", name);
-    data.append("latitude", String(latitude));
-    data.append("longitude", String(longitude));
-    data.append("about", about);
-    data.append("instructions", instructions);
-    data.append("opening_hours", opening_hours);
-    data.append("open_on_weekends", String(open_on_weekends));
-
-    if (images) {
-      images.forEach((image) => data.append("images", image));
-    }
-
-    return data;
-  }, [
-    position,
-    open_on_weekends,
-    name,
-    about,
-    instructions,
-    opening_hours,
-    images,
-  ]);
-
-  const saveOrphanage = useCallback(
-    async (saveType: SaveType, data: FormData) => {
-      if (saveType.type === "create") {
-        await api.post("/orphanages", data);
-
-        alert("Cadastro realizado com sucesso");
-      } else {
-        await api.put(`/orphanages/${params.id}`, data);
-
-        alert("Cadastro atualizado com sucesso");
-      }
-    },
-    [params.id]
-  );
-
   const handleSubmit = useCallback(
-    async (event: FormEvent) => {
-      event.preventDefault();
+    async (e: FormEvent) => {
+      e.preventDefault();
+      await api.put(`/orphanages/${params.id}/status`, {
+        approved,
+      });
 
-      const data = buildFormData();
-
-      const saveType: SaveType = params.id
-        ? { type: "update" }
-        : { type: "create" };
-
-      saveOrphanage(saveType, data);
-
-      history.push("/maps");
+      // history.push("/maps");
     },
-    [buildFormData, history, params.id, saveOrphanage]
+    [approved, params.id]
   );
 
   const handleSelectImages = useCallback(
@@ -180,7 +122,7 @@ const OrphanageForm: React.FC<OrphanageFormProps> = ({
       <Sidebar />
 
       <main>
-        <Form className="create-orphanage-form">
+        <Form onSubmit={handleSubmit} className="create-orphanage-form">
           <fieldset>
             <legend>Dados</legend>
 
@@ -283,9 +225,13 @@ const OrphanageForm: React.FC<OrphanageFormProps> = ({
           </fieldset>
 
           <footer>
-            <button className="reject">Rejeitar</button>
+            <button onClick={() => setApproved(false)} className="reject">
+              Rejeitar
+            </button>
 
-            <button className="approve">Aprovar</button>
+            <button onClick={() => setApproved(true)} className="approve">
+              Aprovar
+            </button>
           </footer>
         </Form>
       </main>
@@ -293,4 +239,4 @@ const OrphanageForm: React.FC<OrphanageFormProps> = ({
   );
 };
 
-export default OrphanageForm;
+export default OrphanageFormStatus;
