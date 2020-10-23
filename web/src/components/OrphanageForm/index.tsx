@@ -78,6 +78,13 @@ const OrphanageForm: React.FC<OrphanageFormProps> = ({
       const { data } = await api.get<Orphanage>(`/orphanages/${params.id}`);
 
       setName(data.name);
+      setAbout(data.about);
+      setInstructions(data.instructions);
+      setOpenOnWeekend(data.open_on_weekends);
+      setOpeningHours(data.opening_hours);
+      setPosition({ latitude: data.latitude, longitude: data.longitude });
+      // setImages(data.images)
+      setPreviewImages(data.images.map((image) => image.url));
     };
 
     loadOrphanageData();
@@ -125,12 +132,12 @@ const OrphanageForm: React.FC<OrphanageFormProps> = ({
 
         alert("Cadastro realizado com sucesso");
       } else {
-        await api.put("/orphanages", data);
+        await api.put(`/orphanages/${params.id}`, data);
 
         alert("Cadastro atualizado com sucesso");
       }
     },
-    []
+    [params.id]
   );
 
   const handleSubmit = useCallback(
@@ -140,8 +147,8 @@ const OrphanageForm: React.FC<OrphanageFormProps> = ({
       const data = buildFormData();
 
       const saveType: SaveType = params.id
-        ? { type: "create" }
-        : { type: "update" };
+        ? { type: "update" }
+        : { type: "create" };
 
       saveOrphanage(saveType, data);
 
