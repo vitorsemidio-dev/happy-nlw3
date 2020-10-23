@@ -9,32 +9,32 @@ const usersRoutes = Router();
 
 usersRoutes.get(
   "/",
-  celebrate(userValidators.index, { abortEarly: false }),
+  celebrate(userValidators.listUsers, { abortEarly: false }),
   ensureAuthenticated,
   usersController.index
 );
 
 usersRoutes.get(
   "/:id",
-  celebrate(userValidators.show, { abortEarly: false }),
+  celebrate(userValidators.showUserDetail, { abortEarly: false }),
   usersController.show
 );
 
 usersRoutes.post(
   "/",
-  celebrate(userValidators.create, { abortEarly: false }),
+  celebrate(userValidators.createUser, { abortEarly: false }),
   usersController.create
 );
 
 usersRoutes.delete(
   "/:id",
-  celebrate(userValidators.delete, { abortEarly: false }),
+  celebrate(userValidators.deleteUser, { abortEarly: false }),
   usersController.delete
 );
 
 usersRoutes.put(
   "/:id",
-  celebrate(userValidators.put, { abortEarly: false }),
+  celebrate(userValidators.updateUser, { abortEarly: false }),
   usersController.update
 );
 

@@ -1,19 +1,19 @@
 import { Segments, Joi } from "celebrate";
 
 const userValidators = {
-  index: {
+  listUsers: {
     [Segments.HEADERS]: Joi.object({
       authorization: Joi.string().required(),
     }).unknown(),
   },
 
-  show: {
+  showUserDetail: {
     [Segments.PARAMS]: {
       id: Joi.number().required(),
     },
   },
 
-  create: {
+  createUser: {
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
@@ -22,13 +22,13 @@ const userValidators = {
     },
   },
 
-  delete: {
+  deleteUser: {
     [Segments.PARAMS]: {
       id: Joi.number().required(),
     },
   },
 
-  put: {
+  updateUser: {
     [Segments.PARAMS]: {
       id: Joi.number().required(),
     },
