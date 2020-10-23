@@ -6,11 +6,13 @@ import mapMarkerImg from "../../assets/img/map-marker.svg";
 
 import { SidebarContainer } from "./styles";
 
-export const Sidebar: React.FC = () => {
+export const Sidebar: React.FC = ({ children }) => {
   const { goBack } = useHistory();
   return (
     <SidebarContainer>
       <img src={mapMarkerImg} alt="Happy" />
+
+      {children}
 
       <footer>
         <button type="button" onClick={goBack}>

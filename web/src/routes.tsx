@@ -9,19 +9,38 @@ import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Dashboard from "./pages/Dashboard";
+import DashboardPending from "./pages/DashboardPending";
+import OrphanageForm from "./components/OrphanageForm";
+import OrphanageFormStatus from "./components/OrphanageFormStatus";
 
 const Routes: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
+        {/* App */}
         <Route path="/" exact component={Landing} />
+        <Route path="/maps" component={OrphanagesMap} />
+
+        {/* Dashboard */}
+        <Route path="/dashboard" exact component={Dashboard} />
+        <Route path="/dashboard/pending" exact component={DashboardPending} />
+
+        {/* Orphanage */}
+        <Route path="/create-orphanage" component={CreateOrphanage} />
+        <Route path="/orphanages/:id" exact component={Orphanage} />
+        <Route path="/orphanages/:id/edit" exact component={OrphanageForm} />
+        <Route
+          path="/orphanages/:id/status"
+          exact
+          component={OrphanageFormStatus}
+        />
+
+        {/* User */}
         <Route path="/login" exact component={Login} />
         <Route path="/forgot-password" exact component={ForgotPassword} />
         <Route path="/reset-password" exact component={ResetPassword} />
         <Route path="/create-user" exact component={CreateUser} />
-        <Route path="/maps" component={OrphanagesMap} />
-        <Route path="/create-orphanage" component={CreateOrphanage} />
-        <Route path="/orphanages/:id" component={Orphanage} />
       </Switch>
     </BrowserRouter>
   );
