@@ -6,25 +6,11 @@ import Textarea from "../../../components/Textarea";
 import Input from "../../../components/Input";
 import Sidebar from "../../../components/Sidebar";
 import MapstaticCard from "../../../components/MapStaticCard";
+import OrphanageModel from "../../../models/Orphanage.model";
 
 import api from "../../../services/api";
 
 import { Container, Form } from "./styles";
-
-interface Orphanage {
-  name: string;
-  id: number;
-  latitude: number;
-  longitude: number;
-  about: string;
-  instructions: string;
-  opening_hours: string;
-  open_on_weekends: boolean;
-  images: Array<{
-    id: string;
-    url: string;
-  }>;
-}
 
 interface OrphanageParams {
   id: string;
@@ -48,7 +34,9 @@ const OrphanageFormStatus: React.FC = () => {
     if (!params || !params.id) return;
 
     const loadOrphanageData = async () => {
-      const { data } = await api.get<Orphanage>(`/orphanages/${params.id}`);
+      const { data } = await api.get<OrphanageModel>(
+        `/orphanages/${params.id}`
+      );
 
       setName(data.name);
       setAbout(data.about);

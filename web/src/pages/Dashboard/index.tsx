@@ -6,6 +6,7 @@ import api from "../../services/api";
 
 import OrphanageCard from "../../components/OrphanageCard";
 import Sidebar from "../../components/Sidebar";
+import OrphanageModel from "../../models/Orphanage.model";
 
 import {
   Container,
@@ -14,18 +15,11 @@ import {
   DashboardLinksContainer,
 } from "./styles";
 
-interface Orphanage {
-  id: number;
-  name: string;
-  latitude: number;
-  longitude: number;
-}
-
 const Dashboard: React.FC = () => {
-  const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
+  const [orphanages, setOrphanages] = useState<OrphanageModel[]>([]);
 
   const loadOrphanages = useCallback(async () => {
-    const { data } = await api.get<Orphanage[]>("/orphanages");
+    const { data } = await api.get<OrphanageModel[]>("/orphanages");
 
     setOrphanages(data);
   }, []);
@@ -37,7 +31,7 @@ const Dashboard: React.FC = () => {
   const orphanagesFound = useMemo(() => orphanages.length, [orphanages]);
 
   const handleDeleteOrphanage = useCallback(
-    async (orphanage: Orphanage) => {
+    async (orphanage: OrphanageModel) => {
       await api.delete(`/orphanages/${orphanage.id}`);
 
       loadOrphanages();

@@ -4,17 +4,12 @@ import { Link } from "react-router-dom";
 
 import MapStaticCard from "../MapStaticCard";
 
+import OrphanageModel from "../../models/Orphanage.model";
+
 import { CardContainer } from "./styles";
 
-interface Orphanage {
-  id: number;
-  name: string;
-  latitude: number;
-  longitude: number;
-}
-
 interface OrphanageCardProps {
-  orphanage: Orphanage;
+  orphanage: OrphanageModel;
 }
 
 const OrphanageCardPending: React.FC<OrphanageCardProps> = ({ orphanage }) => {
