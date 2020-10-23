@@ -2,12 +2,12 @@ import React, { FormEvent, useCallback, useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { useHistory, useParams } from "react-router-dom";
 
-import Textarea from "../../components/Textarea";
-import Input from "../../components/Input";
-import Sidebar from "../../components/Sidebar";
-import MapstaticCard from "../MapStaticCard";
+import Textarea from "../../../components/Textarea";
+import Input from "../../../components/Input";
+import Sidebar from "../../../components/Sidebar";
+import MapstaticCard from "../../../components/MapStaticCard";
 
-import api from "../../services/api";
+import api from "../../../services/api";
 
 import { Container, Form } from "./styles";
 

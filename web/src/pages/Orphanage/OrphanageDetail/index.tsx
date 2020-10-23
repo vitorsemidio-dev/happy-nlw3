@@ -5,10 +5,11 @@ import { Map, Marker, TileLayer } from "react-leaflet";
 import Leaflet from "leaflet";
 import { useParams } from "react-router-dom";
 
-import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../../components/Sidebar";
 
-import api from "../../services/api";
-import mapMarkerImg from "../../assets/img/map-marker.svg";
+import api from "../../../services/api";
+
+import mapMarkerImg from "../../../assets/img/map-marker.svg";
 
 import {
   ContainerOrphanage,

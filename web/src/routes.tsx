@@ -3,16 +3,18 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Landing from "./pages/Landing";
 import OrphanagesMap from "./pages/OrphanagesMap";
-import CreateOrphanage from "./pages/CreateOrphanage";
-import Orphanage from "./pages/Orphanage";
+
+import Dashboard from "./pages/Dashboard";
+import DashboardPending from "./pages/DashboardPending";
+
+import OrphanageDetail from "./pages/Orphanage/OrphanageDetail";
+import OrphanageForm from "./pages/Orphanage/OrphanageForm";
+import OrphanageStatus from "./pages/Orphanage/OrphanageStatus";
+
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-import Dashboard from "./pages/Dashboard";
-import DashboardPending from "./pages/DashboardPending";
-import OrphanageForm from "./components/OrphanageForm";
-import OrphanageFormStatus from "./components/OrphanageFormStatus";
 
 const Routes: React.FC = () => {
   return (
@@ -27,13 +29,13 @@ const Routes: React.FC = () => {
         <Route path="/dashboard/pending" exact component={DashboardPending} />
 
         {/* Orphanage */}
-        <Route path="/create-orphanage" component={CreateOrphanage} />
-        <Route path="/orphanages/:id" exact component={Orphanage} />
+        <Route path="/orphanages/create" component={OrphanageForm} />
+        <Route path="/orphanages/:id" exact component={OrphanageDetail} />
         <Route path="/orphanages/:id/edit" exact component={OrphanageForm} />
         <Route
           path="/orphanages/:id/status"
           exact
-          component={OrphanageFormStatus}
+          component={OrphanageStatus}
         />
 
         {/* User */}

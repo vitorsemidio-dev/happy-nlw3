@@ -10,13 +10,13 @@ import Leaflet, { LeafletMouseEvent } from "leaflet";
 import { FiPlus } from "react-icons/fi";
 import { useHistory, useParams } from "react-router-dom";
 
-import Textarea from "../../components/Textarea";
-import Input from "../../components/Input";
-import Sidebar from "../../components/Sidebar";
+import Textarea from "../../../components/Textarea";
+import Input from "../../../components/Input";
+import Sidebar from "../../../components/Sidebar";
 
-import api from "../../services/api";
+import api from "../../../services/api";
 
-import mapMarkerImg from "../../assets/img/map-marker.svg";
+import mapMarkerImg from "../../../assets/img/map-marker.svg";
 
 import { Container, Form } from "./styles";
 
