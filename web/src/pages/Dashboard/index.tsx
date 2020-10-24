@@ -41,7 +41,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      <Sidebar>
+      <Sidebar showBackButton={false} showSignOutButton>
         <DashboardLinksContainer>
           <Link to="/dashboard" className="active">
             <FiMapPin size={24} />

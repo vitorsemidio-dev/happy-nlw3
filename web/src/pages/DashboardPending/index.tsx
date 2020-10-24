@@ -34,7 +34,7 @@ const DashboardPending: React.FC = () => {
 
   return (
     <Container>
-      <Sidebar>
+      <Sidebar showBackButton={false} showSignOutButton>
         <DashboardLinksContainer>
           <Link to="/dashboard">
             <FiMapPin size={24} color="#fff" />

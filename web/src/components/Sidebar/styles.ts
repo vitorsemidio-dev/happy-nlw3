@@ -15,27 +15,36 @@ export const SidebarContainer = styled.aside`
     width: 48px;
   }
 
-  footer a,
-  footer button {
-    width: 48px;
-    height: 48px;
+  footer {
+    > * + * {
+      margin-top: 16px;
+    }
 
-    border: 0;
+    a,
+    button {
+      width: 48px;
+      height: 48px;
 
-    background: #12afcb;
-    border-radius: 16px;
+      border: 0;
 
-    cursor: pointer;
+      background: #12afcb;
+      border-radius: 16px;
 
-    transition: background-color 0.2s;
+      cursor: pointer;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+      transition: background-color 0.2s;
 
-  footer a:hover,
-  footer button:hover {
-    background: #17d6eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button:hover {
+      background: #f07160;
+    }
+
+    .link-button:hover {
+      background: #17d6eb;
+    }
   }
 `;
