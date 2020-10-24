@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { FiArrowLeft, FiPower } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
 
@@ -18,8 +18,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
   showBackButton = true,
   showSignOutButton = false,
 }) => {
-  const { goBack } = useHistory();
+  const { goBack, push } = useHistory();
   const { signOut } = useAuth();
+
+  const handleSignOut = useCallback(() => {
+    signOut();
+    push("/");
+  }, [signOut, push]);
 
   return (
     <SidebarContainer>
@@ -35,7 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
 
         {showSignOutButton && (
-          <button type="button" onClick={signOut}>
+          <button type="button" onClick={() => handleSignOut()}>
             <FiPower size={24} color="#FFF" />
           </button>
         )}
