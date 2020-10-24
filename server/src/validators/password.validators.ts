@@ -3,8 +3,9 @@ import { Segments, Joi } from "celebrate";
 const passwordValidators = {
   resetPassword: {
     [Segments.BODY]: {
-      password: Joi.string().required(),
       token: Joi.string().required().length(6),
+      password: Joi.string().required(),
+      passwordConfirmation: Joi.string().required().valid(Joi.ref("password")),
     },
   },
 
