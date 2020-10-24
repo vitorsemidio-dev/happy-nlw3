@@ -2,25 +2,28 @@ import React from "react";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
+import MapStaticCard from "../MapStaticCard";
+
+import OrphanageModel from "../../models/Orphanage.model";
+
 import { CardContainer } from "./styles";
 
-interface Orphanage {
-  id: number;
-  name: string;
-}
-
 interface OrphanageCardProps {
-  orphanage: Orphanage;
-  onDeleteOrphanage: (orphanage: Orphanage) => Promise<void>;
+  orphanage: OrphanageModel;
+  onDeleteOrphanage: (orphanage: OrphanageModel) => Promise<void>;
 }
 
 const OrphanageCard: React.FC<OrphanageCardProps> = ({
   orphanage,
   onDeleteOrphanage,
 }) => {
+  console.log(orphanage);
   return (
     <CardContainer>
-      <div className="map">Marker</div>
+      <MapStaticCard
+        latitude={orphanage.latitude}
+        longitude={orphanage.longitude}
+      />
       <footer>
         <strong>{orphanage.name}</strong>
         <div>

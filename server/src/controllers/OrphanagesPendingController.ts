@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import AppError from "../errors/AppError";
 
+import AppError from "../errors/AppError";
 import Orphanage from "../models/Orphanage";
 
 class OrphanagesPendingController {

@@ -4,6 +4,8 @@ import { FiArrowRight, FiPlus } from "react-icons/fi";
 import { Map, TileLayer, Marker } from "react-leaflet";
 import Leaflet from "leaflet";
 
+import OrphanageModel from "../../models/Orphanage.model";
+
 import api from "../../services/api";
 
 import {
@@ -22,18 +24,11 @@ const mapIcon = Leaflet.icon({
   popupAnchor: [170, 2],
 });
 
-interface Orphanage {
-  name: string;
-  id: number;
-  latitude: number;
-  longitude: number;
-}
-
 const OrphanagesMap: React.FC = () => {
-  const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
+  const [orphanages, setOrphanages] = useState<OrphanageModel[]>([]);
 
   useEffect(() => {
-    api.get<Orphanage[]>("orphanages").then((response) => {
+    api.get<OrphanageModel[]>("orphanages").then((response) => {
       setOrphanages(response.data);
     });
   }, []);
@@ -79,7 +74,7 @@ const OrphanagesMap: React.FC = () => {
         <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       </Map>
 
-      <LinkCreateOrphanage to="/create-orphanage">
+      <LinkCreateOrphanage to="/orphanages/create">
         <FiPlus size={32} color="#fff" />
       </LinkCreateOrphanage>
     </OrphanagesMapContainer>

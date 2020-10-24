@@ -140,30 +140,45 @@ export const Form = styled.form`
     border-left: 0;
   }
 
-  button.confirm-button {
-    margin-top: 64px;
-
-    width: 100%;
-    height: 64px;
-    border: 0;
-    cursor: pointer;
-    background: #3cdc8c;
-    border-radius: 20px;
-    color: #ffffff;
-    font-weight: 800;
-
+  footer {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 
-    transition: background-color 0.2s;
-  }
+    button {
+      margin-top: 64px;
 
-  button.confirm-button svg {
-    margin-right: 16px;
-  }
+      width: 45%;
+      height: 64px;
+      border: 0;
+      cursor: pointer;
+      border-radius: 20px;
+      color: #ffffff;
+      font-weight: 800;
 
-  button.confirm-button:hover {
-    background: #36cf82;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      transition: background-color 0.2s;
+    }
+
+    button svg {
+      margin-right: 16px;
+    }
+
+    .approve {
+      background: #3cdc8c;
+      &:hover {
+        //
+      }
+    }
+
+    .reject {
+      background: #ff669d;
+      &:hover {
+        //
+      }
+    }
   }
 `;

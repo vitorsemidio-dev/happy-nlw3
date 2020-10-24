@@ -5,10 +5,12 @@ import { Map, Marker, TileLayer } from "react-leaflet";
 import Leaflet from "leaflet";
 import { useParams } from "react-router-dom";
 
-import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../../components/Sidebar";
+import OrphanageModel from "../../../models/Orphanage.model";
 
-import api from "../../services/api";
-import mapMarkerImg from "../../assets/img/map-marker.svg";
+import api from "../../../services/api";
+
+import mapMarkerImg from "../../../assets/img/map-marker.svg";
 
 import {
   ContainerOrphanage,
@@ -22,33 +24,17 @@ const happyMapIcon = Leaflet.icon({
   iconAnchor: [29, 68],
   popupAnchor: [0, -60],
 });
-
-interface Orphanage {
-  name: string;
-  id: number;
-  latitude: number;
-  longitude: number;
-  about: string;
-  instructions: string;
-  opening_hours: string;
-  open_on_weekends: boolean;
-  images: Array<{
-    id: string;
-    url: string;
-  }>;
-}
-
 interface OrphanageParams {
   id: string;
 }
 
 const Orphanage: React.FC = () => {
   const params = useParams<OrphanageParams>();
-  const [orphanage, setOrphanage] = useState<Orphanage>();
+  const [orphanage, setOrphanage] = useState<OrphanageModel>();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
-    api.get<Orphanage>(`orphanages/${params.id}`).then((response) => {
+    api.get<OrphanageModel>(`orphanages/${params.id}`).then((response) => {
       console.log(response.data);
       setOrphanage(response.data);
     });

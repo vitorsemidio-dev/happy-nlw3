@@ -4,6 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import HappyContainer from "../../components/HappyContainer";
 import Input from "../../components/Input";
+import InputPassword from "../../components/InputPassword";
 
 import api from "../../services/api";
 
@@ -63,18 +64,16 @@ const ResetPassword: React.FC = () => {
               onChange={(e) => setToken(e.target.value)}
             />
 
-            <Input
+            <InputPassword
               name="password"
               label="Senha"
-              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <Input
+            <InputPassword
               name="passwordConfirmation"
               label="Confirmação da senha"
-              type="password"
               value={passwordConfirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}
             />

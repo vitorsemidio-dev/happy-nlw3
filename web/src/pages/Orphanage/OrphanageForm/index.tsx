@@ -10,35 +10,16 @@ import Leaflet, { LeafletMouseEvent } from "leaflet";
 import { FiPlus } from "react-icons/fi";
 import { useHistory, useParams } from "react-router-dom";
 
-import Textarea from "../../components/Textarea";
-import Input from "../../components/Input";
-import Sidebar from "../../components/Sidebar";
+import Textarea from "../../../components/Textarea";
+import Input from "../../../components/Input";
+import Sidebar from "../../../components/Sidebar";
+import OrphanageModel from "../../../models/Orphanage.model";
 
-import api from "../../services/api";
+import api from "../../../services/api";
 
-import mapMarkerImg from "../../assets/img/map-marker.svg";
+import mapMarkerImg from "../../../assets/img/map-marker.svg";
 
 import { Container, Form } from "./styles";
-
-interface Orphanage {
-  name: string;
-  id: number;
-  latitude: number;
-  longitude: number;
-  about: string;
-  instructions: string;
-  opening_hours: string;
-  open_on_weekends: boolean;
-  images: Array<{
-    id: string;
-    url: string;
-  }>;
-}
-
-interface OrphanageFormProps {
-  orphanage?: Orphanage;
-  orphanage_id?: string;
-}
 
 const happyMapIcon = Leaflet.icon({
   iconUrl: mapMarkerImg,
@@ -55,10 +36,7 @@ interface SaveType {
   type: "create" | "update";
 }
 
-const OrphanageForm: React.FC<OrphanageFormProps> = ({
-  orphanage,
-  orphanage_id,
-}) => {
+const OrphanageForm: React.FC = () => {
   const history = useHistory();
   const params = useParams<OrphanageParams>();
 
@@ -75,7 +53,9 @@ const OrphanageForm: React.FC<OrphanageFormProps> = ({
     if (!params || !params.id) return;
 
     const loadOrphanageData = async () => {
-      const { data } = await api.get<Orphanage>(`/orphanages/${params.id}`);
+      const { data } = await api.get<OrphanageModel>(
+        `/orphanages/${params.id}`
+      );
 
       setName(data.name);
       setAbout(data.about);

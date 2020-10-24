@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import landingImg from "../../assets/img/ilustracao.png";
@@ -15,6 +16,16 @@ export const ContainerLanding = styled.div`
 
 export const ContentWrapper = styled.div`
   position: relative;
+
+  header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  header img {
+    height: 120px;
+  }
 
   width: 100%;
   max-width: 1100px;
@@ -46,7 +57,7 @@ export const ContentWrapper = styled.div`
   .location {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 200px;
 
     font-size: 24px;
     line-height: 34px;
@@ -80,5 +91,26 @@ export const ContentWrapper = styled.div`
 
   .enter-app:hover {
     background: #96feff;
+  }
+`;
+
+export const RestrictAccess = styled(Link)`
+  text-decoration: none;
+  border-radius: 30px;
+  height: 56px;
+  width: 222px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #12d4e0;
+  color: #fff;
+
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background: #96feff;
+    color: #15c3d6;
   }
 `;

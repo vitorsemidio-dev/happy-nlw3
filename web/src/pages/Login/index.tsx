@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { FiArrowLeft, FiLogIn } from "react-icons/fi";
 
 import Input from "../../components/Input";
+import InputPassword from "../../components/InputPassword";
 import HappyContainer from "../../components/HappyContainer";
 
 import { useAuth } from "../../hooks/auth";
@@ -22,7 +23,7 @@ const Login: React.FC = () => {
       e.preventDefault();
       await signIn({ email, password });
 
-      history.push("/");
+      history.push("/dashboard");
     },
     [email, history, password, signIn]
   );
@@ -46,10 +47,9 @@ const Login: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <Input
+            <InputPassword
               name="password"
               label="Senha"
-              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

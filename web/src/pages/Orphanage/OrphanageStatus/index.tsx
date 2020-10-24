@@ -1,46 +1,16 @@
-import React, {
-  ChangeEvent,
-  FormEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import { Map, Marker, TileLayer } from "react-leaflet";
-import Leaflet, { LeafletMouseEvent } from "leaflet";
+import React, { FormEvent, useCallback, useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { useHistory, useParams } from "react-router-dom";
 
-import Textarea from "../../components/Textarea";
-import Input from "../../components/Input";
-import Sidebar from "../../components/Sidebar";
+import Textarea from "../../../components/Textarea";
+import Input from "../../../components/Input";
+import Sidebar from "../../../components/Sidebar";
+import MapstaticCard from "../../../components/MapStaticCard";
+import OrphanageModel from "../../../models/Orphanage.model";
 
-import api from "../../services/api";
-
-import mapMarkerImg from "../../assets/img/map-marker.svg";
+import api from "../../../services/api";
 
 import { Container, Form } from "./styles";
-
-interface Orphanage {
-  name: string;
-  id: number;
-  latitude: number;
-  longitude: number;
-  about: string;
-  instructions: string;
-  opening_hours: string;
-  open_on_weekends: boolean;
-  images: Array<{
-    id: string;
-    url: string;
-  }>;
-}
-
-const happyMapIcon = Leaflet.icon({
-  iconUrl: mapMarkerImg,
-  iconSize: [58, 68],
-  iconAnchor: [29, 68],
-  popupAnchor: [0, -60],
-});
 
 interface OrphanageParams {
   id: string;
@@ -64,7 +34,9 @@ const OrphanageFormStatus: React.FC = () => {
     if (!params || !params.id) return;
 
     const loadOrphanageData = async () => {
-      const { data } = await api.get<Orphanage>(`/orphanages/${params.id}`);
+      const { data } = await api.get<OrphanageModel>(
+        `/orphanages/${params.id}`
+      );
 
       setName(data.name);
       setAbout(data.about);
@@ -78,14 +50,6 @@ const OrphanageFormStatus: React.FC = () => {
 
     loadOrphanageData();
   }, [params]);
-
-  const handleMapClick = useCallback((event: LeafletMouseEvent) => {
-    const { lat, lng } = event.latlng;
-    setPosition({
-      latitude: lat,
-      longitude: lng,
-    });
-  }, []);
 
   const navigateToDashboardPending = useCallback(() => {
     history.push("/dashboard/pending");
@@ -103,24 +67,6 @@ const OrphanageFormStatus: React.FC = () => {
     [approved, navigateToDashboardPending, params.id]
   );
 
-  const handleSelectImages = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      if (!event.target.files) {
-        return;
-      }
-
-      const selectedImages = Array.from(event.target.files);
-      setImages(selectedImages);
-
-      const selectedImagesPreview = selectedImages.map((image) => {
-        return URL.createObjectURL(image);
-      });
-
-      setPreviewImages(selectedImagesPreview);
-    },
-    []
-  );
-
   return (
     <Container id="page-create-orphanage">
       <Sidebar />
@@ -130,42 +76,14 @@ const OrphanageFormStatus: React.FC = () => {
           <fieldset>
             <legend>Dados</legend>
 
-            <Map
-              center={[position.latitude, position.longitude]}
-              zoom={16}
-              style={{ width: "100%", height: 280 }}
-              dragging={false}
-              touchZoom={false}
-              zoomControl={false}
-              scrollWheelZoom={false}
-              doubleClickZoom={false}
-            >
-              <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <Marker
-                interactive={false}
-                icon={happyMapIcon}
-                position={[position.latitude, position.longitude]}
-              />
-            </Map>
+            <MapstaticCard
+              latitude={position.latitude}
+              longitude={position.longitude}
+            ></MapstaticCard>
 
-            <Input
-              name="name"
-              label="Nome"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
+            <Input name="name" label="Nome" value={name} readOnly />
 
-            <Textarea
-              name="about"
-              label="Sobre"
-              extraInfo="Máximo de 300 catacteres"
-              value={about}
-              onChange={(e) => {
-                setAbout(e.target.value);
-              }}
-            />
+            <Textarea name="about" label="Sobre" value={about} readOnly />
 
             <div className="input-block">
               <label htmlFor="images">Fotos</label>
@@ -178,12 +96,6 @@ const OrphanageFormStatus: React.FC = () => {
                   <FiPlus size={24} color="#15b6d6" />
                 </label>
               </div>
-              <input
-                multiple
-                type="file"
-                id="image[]"
-                onChange={handleSelectImages}
-              />
             </div>
           </fieldset>
 
@@ -194,18 +106,14 @@ const OrphanageFormStatus: React.FC = () => {
               name="instructions"
               label="Instruções"
               value={instructions}
-              onChange={(e) => {
-                setInstructions(e.target.value);
-              }}
+              readOnly
             />
 
             <Input
               name="opening_hours"
               label="Horário das visitas"
               value={opening_hours}
-              onChange={(e) => {
-                setOpeningHours(e.target.value);
-              }}
+              readOnly
             />
 
             <div className="input-block">
@@ -215,14 +123,12 @@ const OrphanageFormStatus: React.FC = () => {
                 <button
                   type="button"
                   className={open_on_weekends ? "active" : ""}
-                  onClick={() => setOpenOnWeekend(true)}
                 >
                   Sim
                 </button>
                 <button
                   type="button"
                   className={!open_on_weekends ? "active" : ""}
-                  onClick={() => setOpenOnWeekend(false)}
                 >
                   Não
                 </button>

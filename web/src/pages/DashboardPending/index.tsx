@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import OrphanageCardPending from "../../components/OrphanageCardPending";
 import Sidebar from "../../components/Sidebar";
+import OrphanageModel from "../../models/Orphanage.model";
 
 import api from "../../services/api";
 
@@ -14,16 +15,13 @@ import {
   DashboardLinksContainer,
 } from "./styles";
 
-interface Orphanage {
-  id: number;
-  name: string;
-}
-
 const DashboardPending: React.FC = () => {
-  const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
+  const [orphanages, setOrphanages] = useState<OrphanageModel[]>([]);
 
   const loadOrphanages = useCallback(async () => {
-    const { data } = await api.get<Orphanage[]>("/orphanages?status=pending");
+    const { data } = await api.get<OrphanageModel[]>(
+      "/orphanages?status=pending"
+    );
 
     setOrphanages(data);
   }, []);
@@ -36,7 +34,7 @@ const DashboardPending: React.FC = () => {
 
   return (
     <Container>
-      <Sidebar>
+      <Sidebar showBackButton={false} showSignOutButton>
         <DashboardLinksContainer>
           <Link to="/dashboard">
             <FiMapPin size={24} color="#fff" />
