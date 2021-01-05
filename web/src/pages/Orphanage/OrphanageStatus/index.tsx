@@ -10,6 +10,8 @@ import OrphanageModel from "../../../models/Orphanage.model";
 
 import api from "../../../services/api";
 
+import { useToast } from "../../../hooks/toast";
+
 import { Container, Form } from "./styles";
 
 interface OrphanageParams {
@@ -18,6 +20,8 @@ interface OrphanageParams {
 const OrphanageFormStatus: React.FC = () => {
   const history = useHistory();
   const params = useParams<OrphanageParams>();
+
+  const { addToast } = useToast();
 
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
   const [open_on_weekends, setOpenOnWeekend] = useState(false);
@@ -60,6 +64,12 @@ const OrphanageFormStatus: React.FC = () => {
       e.preventDefault();
       await api.put(`/orphanages/${params.id}/status`, {
         approved,
+      });
+
+      addToast({
+        title: "Instituição aprovada",
+        type: "success",
+        description: `Você aprovou a instituição ${name} e agora ela está disponível na lista de mapas`,
       });
 
       navigateToDashboardPending();

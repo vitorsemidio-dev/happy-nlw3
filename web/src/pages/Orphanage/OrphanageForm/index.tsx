@@ -143,7 +143,7 @@ const OrphanageForm: React.FC = () => {
         return;
       }
 
-      const selectedImages = Array.from(event.target.files);
+      const selectedImages = [...images, ...Array.from(event.target.files)];
       setImages(selectedImages);
 
       const selectedImagesPreview = selectedImages.map((image) => {
@@ -152,7 +152,7 @@ const OrphanageForm: React.FC = () => {
 
       setPreviewImages(selectedImagesPreview);
     },
-    [setImages, setPreviewImages]
+    [setImages, setPreviewImages, images]
   );
 
   return (

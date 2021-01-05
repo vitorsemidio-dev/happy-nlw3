@@ -17,7 +17,6 @@ const OrphanageCard: React.FC<OrphanageCardProps> = ({
   orphanage,
   onDeleteOrphanage,
 }) => {
-  console.log(orphanage);
   return (
     <CardContainer>
       <MapStaticCard
