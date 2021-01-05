@@ -37,7 +37,9 @@ const OrphanagesMap: React.FC = () => {
     <OrphanagesMapContainer id="page-map">
       <Sidebar>
         <header>
-          <img src={mapMarkerImg} alt="Marcador do Mapa" />
+          <Link to="/">
+            <img src={mapMarkerImg} alt="Marcador do Mapa" />
+          </Link>
 
           <h2>Escolha um orfanato no mapa</h2>
           <p>Muitas crianças estão esperando a sua visita</p>

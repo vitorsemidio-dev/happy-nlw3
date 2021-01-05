@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from "react";
+import React, { FormEvent, useCallback, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { FiArrowLeft, FiLogIn } from "react-icons/fi";
 
@@ -17,6 +17,14 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepConect, setKeepConect] = useState(true);
+
+  useEffect(() => {
+    const checkUserLogged = localStorage.getItem("@Happy:user");
+
+    if (checkUserLogged) {
+      history.push("/dashboard");
+    }
+  }, []);
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {

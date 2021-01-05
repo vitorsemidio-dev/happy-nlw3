@@ -7,6 +7,9 @@ export const Container = styled.div`
   main {
     flex: 1;
     padding-left: 96px;
+
+    display: flex;
+    flex-direction: column;
   }
 `;
 
@@ -14,6 +17,9 @@ export const OrphanageSessionContainer = styled.section`
   width: 90%;
   max-width: 1120px;
   margin: 64px auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 
   header {
     display: flex;
@@ -80,5 +86,20 @@ export const DashboardLinksContainer = styled.div`
   .active {
     color: #0089a5;
     background-color: #ffd666;
+  }
+`;
+
+export const OrphanageNotFoundContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-size: 24px;
+    color: #8fa7b2;
+    width: 300px;
+    text-align: center;
   }
 `;

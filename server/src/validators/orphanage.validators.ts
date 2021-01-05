@@ -8,7 +8,7 @@ const orphanageValidators = {
   },
 
   showOrphanageDetail: {
-    [Segments.HEADERS]: {
+    [Segments.PARAMS]: {
       id: Joi.number().required(),
     },
   },
@@ -26,7 +26,7 @@ const orphanageValidators = {
   },
 
   updateOrphanage: {
-    [Segments.HEADERS]: {
+    [Segments.PARAMS]: {
       id: Joi.number().required(),
     },
     [Segments.BODY]: {
@@ -41,13 +41,13 @@ const orphanageValidators = {
   },
 
   deleteOrphanage: {
-    [Segments.HEADERS]: {
+    [Segments.PARAMS]: {
       id: Joi.number().required(),
     },
   },
 
   updateOrphanageStatus: {
-    [Segments.HEADERS]: {
+    [Segments.PARAMS]: {
       id: Joi.number().required(),
     },
     [Segments.BODY]: {

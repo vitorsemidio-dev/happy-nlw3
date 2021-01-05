@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import OrphanageCardPending from "../../components/OrphanageCardPending";
 import Sidebar from "../../components/Sidebar";
 import OrphanageModel from "../../models/Orphanage.model";
+import sadFace from "../../assets/img/sad-face.svg";
 
 import api from "../../services/api";
 
@@ -13,6 +14,7 @@ import {
   OrphanageSessionContainer,
   OrphanageListContainer,
   DashboardLinksContainer,
+  OrphanageNotFoundContainer,
 } from "./styles";
 
 const DashboardPending: React.FC = () => {
@@ -51,14 +53,21 @@ const DashboardPending: React.FC = () => {
             <span>{orphanagesFound} orfanatos</span>
           </header>
 
-          <OrphanageListContainer>
-            {orphanages.map((orphanage) => (
-              <OrphanageCardPending
-                key={String(orphanage.id)}
-                orphanage={orphanage}
-              ></OrphanageCardPending>
-            ))}
-          </OrphanageListContainer>
+          {orphanagesFound === 0 ? (
+            <OrphanageNotFoundContainer>
+              <img alt="Nenhum orfanato pendente encontrado" src={sadFace} />
+              <p>Nenhum orfanato pendente encontrado</p>
+            </OrphanageNotFoundContainer>
+          ) : (
+            <OrphanageListContainer>
+              {orphanages.map((orphanage) => (
+                <OrphanageCardPending
+                  key={String(orphanage.id)}
+                  orphanage={orphanage}
+                ></OrphanageCardPending>
+              ))}
+            </OrphanageListContainer>
+          )}
         </OrphanageSessionContainer>
       </main>
     </Container>

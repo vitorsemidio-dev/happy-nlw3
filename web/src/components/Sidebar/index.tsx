@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { FiArrowLeft, FiPower } from "react-icons/fi";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { useAuth } from "../../hooks/auth";
 
@@ -28,7 +28,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <SidebarContainer>
-      <img src={mapMarkerImg} alt="Happy" />
+      <Link to="/">
+        <img src={mapMarkerImg} alt="Happy" />
+      </Link>
 
       {children}
 

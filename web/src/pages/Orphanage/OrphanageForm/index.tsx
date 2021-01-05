@@ -152,7 +152,7 @@ const OrphanageForm: React.FC = () => {
 
       setPreviewImages(selectedImagesPreview);
     },
-    []
+    [setImages, setPreviewImages]
   );
 
   return (
