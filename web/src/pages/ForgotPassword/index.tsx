@@ -5,12 +5,15 @@ import HappyContainer from "../../components/HappyContainer";
 
 import api from "../../services/api";
 
+import { useToast } from "../../hooks/toast";
+
 import { FormContainer, Form, ButtonBack } from "./styles";
 import { useHistory } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 
 const ForgotPassword: React.FC = () => {
   const history = useHistory();
+  const { addToast } = useToast();
 
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,15 +29,21 @@ const ForgotPassword: React.FC = () => {
           email,
         });
 
-        alert(
-          "Recuperação de senha solicitada com sucesso! Acesse seu e-mail para informar a nova senha"
-        );
+        addToast({
+          title: "Solicitação da recuperação de senha",
+          type: "success",
+          description:
+            "Acesse seu e-mail e informe o token que enviamos para reset da sua senha",
+        });
 
         history.push("/reset-password");
       } catch (err) {
-        alert(
-          "Falha ao tentar recuperação de senha. Tente novamente mais tarde"
-        );
+        addToast({
+          title: "Falha na solicitação de reset da senha",
+          type: "error",
+          description:
+            "Ocorreu uma falha na tentivação da solicitação de recuperação de senha. Tente novamente mais tarde",
+        });
       } finally {
         setLoading(false);
       }

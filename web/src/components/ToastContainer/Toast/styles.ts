@@ -22,10 +22,10 @@ interface ContainerProps {
 }
 
 export const Container = styled(animated.div)<ContainerProps>`
-  width: 360px;
+  width: 400px;
 
   position: relative;
-  padding: 16px 30px 16px 16px;
+  padding: 16px 36px 16px 16px;
   border-radius: 10px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 
@@ -54,12 +54,13 @@ export const Container = styled(animated.div)<ContainerProps>`
 
   button {
     position: absolute;
-    right: 16px;
+    right: 12px;
     top: 16px;
     opacity: 0.6;
     border: 0;
     background: transparent;
     color: inherit;
+    cursor: pointer;
   }
 
   ${(props) =>

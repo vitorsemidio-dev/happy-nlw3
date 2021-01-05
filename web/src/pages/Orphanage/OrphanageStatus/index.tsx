@@ -25,7 +25,6 @@ const OrphanageFormStatus: React.FC = () => {
 
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
   const [open_on_weekends, setOpenOnWeekend] = useState(false);
-  const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
@@ -48,7 +47,6 @@ const OrphanageFormStatus: React.FC = () => {
       setOpenOnWeekend(data.open_on_weekends);
       setOpeningHours(data.opening_hours);
       setPosition({ latitude: data.latitude, longitude: data.longitude });
-      // setImages(data.images)
       setPreviewImages(data.images.map((image) => image.url));
     };
 
@@ -66,15 +64,23 @@ const OrphanageFormStatus: React.FC = () => {
         approved,
       });
 
-      addToast({
-        title: "Instituição aprovada",
-        type: "success",
-        description: `Você aprovou a instituição ${name} e agora ela está disponível na lista de mapas`,
-      });
+      if (approved) {
+        addToast({
+          title: "Instituição aprovada",
+          type: "success",
+          description: `Você aprovou a instituição ${name} e agora ela está disponível na lista de mapas`,
+        });
+      } else {
+        addToast({
+          title: "Instituição rejeitada",
+          type: "error",
+          description: `Você recusou a instituição ${name}`,
+        });
+      }
 
       navigateToDashboardPending();
     },
-    [approved, navigateToDashboardPending, params.id]
+    [approved, navigateToDashboardPending, params.id, addToast, name]
   );
 
   return (

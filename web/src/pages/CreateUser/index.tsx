@@ -6,12 +6,15 @@ import HappyContainer from "../../components/HappyContainer";
 import Input from "../../components/Input";
 import InputPassword from "../../components/InputPassword";
 
+import { useToast } from "../../hooks/toast";
+
 import api from "../../services/api";
 
 import { FormContainer, Form, FooterForm, ButtonBack } from "./styles";
 
 const CreateUser: React.FC = () => {
   const history = useHistory();
+  const { addToast } = useToast();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,11 +32,20 @@ const CreateUser: React.FC = () => {
           passwordConfirmation,
         })
         .then((response) => {
-          alert("Parabéns! Sua conta foi criada com sucesso");
+          addToast({
+            title: "Parabéns! Sua conta foi criada com sucesso",
+            type: "success",
+            description: "Entre na sua conta através da tela",
+          });
           history.push("/login");
         })
         .catch((err) => {
-          alert("Falha ao realizar registro");
+          addToast({
+            title: "Ocorreu uma falha no registro",
+            type: "error",
+            description:
+              "Tentamos criar a sua conta, mas por alguma razão ocorreu uma falha. Tente novamente mais tarde",
+          });
         });
     },
     [name, email, password, passwordConfirmation, history]

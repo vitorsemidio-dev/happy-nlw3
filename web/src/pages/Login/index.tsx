@@ -7,12 +7,14 @@ import InputPassword from "../../components/InputPassword";
 import HappyContainer from "../../components/HappyContainer";
 
 import { useAuth } from "../../hooks/auth";
+import { useToast } from "../../hooks/toast";
 
 import { FormContainer, Form, FooterForm, ButtonBack } from "./styles";
 
 const Login: React.FC = () => {
   const history = useHistory();
   const { signIn } = useAuth();
+  const { addToast } = useToast();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,14 +26,22 @@ const Login: React.FC = () => {
     if (checkUserLogged) {
       history.push("/dashboard");
     }
-  }, []);
+  }, [history]);
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
-      await signIn({ email, password });
+      try {
+        await signIn({ email, password });
 
-      history.push("/dashboard");
+        history.push("/dashboard");
+      } catch (err) {
+        addToast({
+          title: "Falha no login",
+          type: "error",
+          description: "Combinação de e-mail e senha inválidos",
+        });
+      }
     },
     [email, history, password, signIn]
   );

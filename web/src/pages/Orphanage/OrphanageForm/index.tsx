@@ -17,6 +17,8 @@ import OrphanageModel from "../../../models/Orphanage.model";
 
 import api from "../../../services/api";
 
+import { useToast } from "../../../hooks/toast";
+
 import mapMarkerImg from "../../../assets/img/map-marker.svg";
 
 import { Container, Form } from "./styles";
@@ -39,6 +41,8 @@ interface SaveType {
 const OrphanageForm: React.FC = () => {
   const history = useHistory();
   const params = useParams<OrphanageParams>();
+
+  const { addToast } = useToast();
 
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
   const [open_on_weekends, setOpenOnWeekend] = useState(false);
@@ -63,7 +67,6 @@ const OrphanageForm: React.FC = () => {
       setOpenOnWeekend(data.open_on_weekends);
       setOpeningHours(data.opening_hours);
       setPosition({ latitude: data.latitude, longitude: data.longitude });
-      // setImages(data.images)
       setPreviewImages(data.images.map((image) => image.url));
     };
 
@@ -110,14 +113,22 @@ const OrphanageForm: React.FC = () => {
       if (saveType.type === "create") {
         await api.post("/orphanages", data);
 
-        alert("Cadastro realizado com sucesso");
+        addToast({
+          title: "Cadastro realizado com sucesso",
+          type: "success",
+          description: `Instituição criada com sucesso. Aguarde até que ela seja aprovada por algum administrador`,
+        });
       } else {
         await api.put(`/orphanages/${params.id}`, data);
 
-        alert("Cadastro atualizado com sucesso");
+        addToast({
+          title: "Cadastro atualizado com sucesso",
+          type: "success",
+          description: `Dados da instituição ${name} foram atualizados com sucesso`,
+        });
       }
     },
-    [params.id]
+    [params.id, addToast, name]
   );
 
   const handleSubmit = useCallback(

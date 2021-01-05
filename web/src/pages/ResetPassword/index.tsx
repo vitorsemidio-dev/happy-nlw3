@@ -6,6 +6,8 @@ import HappyContainer from "../../components/HappyContainer";
 import Input from "../../components/Input";
 import InputPassword from "../../components/InputPassword";
 
+import { useToast } from "../../hooks/toast";
+
 import api from "../../services/api";
 
 import { FormContainer, Form, ButtonBack } from "./styles";
@@ -17,6 +19,8 @@ function useQuery() {
 const ResetPassword: React.FC = () => {
   const history = useHistory();
   let query = useQuery();
+
+  const { addToast } = useToast();
 
   const [token, setToken] = useState(() => {
     const initialToken = query.get("token");
@@ -36,7 +40,12 @@ const ResetPassword: React.FC = () => {
         passwordConfirmation,
       });
 
-      alert("Senha redefinida com sucesso");
+      addToast({
+        title: "Senha redefinida com sucesso",
+        type: "success",
+        description: "Acesse sua conta com sua nova senha pela tela de Login",
+      });
+
       history.push("/login");
     },
     [token, password, passwordConfirmation, history]
