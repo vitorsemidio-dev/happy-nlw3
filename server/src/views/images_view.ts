@@ -1,10 +1,16 @@
 import Image from "../models/Image";
+import { getLocalIp } from "../utils/get-local-ip";
+
+const protocol = process.env.PROTOCOL || "http";
+const port = process.env.PORT || 3333;
+const host = process.env.HOST || getLocalIp() || "localhost";
+
 
 export default {
   render(image: Image) {
     return {
       ...image,
-      url: `http://192.168.11.10:3333/uploads/${image.path}`,
+      url: `${protocol}://${host}:${port}/uploads/${image.path}`,
     };
   },
 
