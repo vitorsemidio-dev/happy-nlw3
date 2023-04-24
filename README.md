@@ -216,5 +216,5 @@ As seguintes ferramentas foram usadas na construção do projeto:
  <sub><strong>🌟 Vitor Emídio 🌟</strong></sub>
 </p>
 
-[![Linkedin Badge](https://img.shields.io/badge/Vitor-Emidio-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://https://www.linkedin.com/in/vitorsemidio/)](https://www.linkedin.com/in/vitorsemidio/)
+[![Linkedin Badge](https://img.shields.io/badge/Vitor-Emidio-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://https://www.linkedin.com/in/vitorsemidio/)](https://www.linkedin.com/in/vitor-de-santana-emidio/)
 [![Github Badge](https://img.shields.io/badge/-Github-000?style=flat-square&logo=Github&logoColor=white&link=https://github.com/vitorsemidio-dev)](https://github.com/vitorsemidio-dev)
